@@ -8,4 +8,19 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\database-check.png" />
+    <None Remove="Assets\database-slash.png" />
+    <None Remove="Assets\search.png" />
+    <None Remove="search.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\database-check.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\database-slash.png" />
+    <Resource Include="Assets\search.png" />
+  </ItemGroup>
+
 </Project>
