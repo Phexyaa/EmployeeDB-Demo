@@ -38,6 +38,7 @@
 					VerticalAlignment="Top"
 					Grid.Column="1"
 					Command="{Binding SearchCommand}"
+					CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
 					Height="25"
 					Width="25"
 					Background="#FF5D4949">

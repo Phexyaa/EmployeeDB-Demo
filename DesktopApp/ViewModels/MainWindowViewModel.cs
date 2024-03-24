@@ -30,14 +30,17 @@ namespace DesktopApp
         {
             _apiService = App.Current.Services.GetService<IApiService>();
             Employee.FirstName = "George";
-            SearchCommand = new RelayCommand(Search);
+            SearchCommand = new RelayCommand<string>(Search);
         }
 
-        public void Search()
+        public void Search(string keyword)
         {
-            if(_apiService != null)
+            if (_apiService != null)
             {
-                Employees = _apiService.GetEmployees();
+                if (!string.IsNullOrWhiteSpace(keyword))
+                    Employees = _apiService.GetEmployees().Where(e => e.FirstName.StartsWith(keyword)).ToList();
+                else
+                    Employees = _apiService.GetEmployees();
             }
         }
 
