@@ -20,13 +20,22 @@ namespace DesktopApp
         private readonly IApiService? _apiService;
         public string Title { get; set; } = "Employee Lookup Demo";
 
-        private ImageSource ConnectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
-        private ImageSource ConnectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
+        private ImageSource connectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
+        private ImageSource connectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
         private ImageSource _connectionStatusIcon;
         public ImageSource ConnectionStatusIcon
         {
             get => _connectionStatusIcon;
             set => SetProperty(ref _connectionStatusIcon, value);
+        }
+
+        private Brush connectionStatusOkBackground = Brushes.Green;
+        private Brush connectionStatusFailBackground = Brushes.Red;
+        private Brush _connectionStatusBackground;
+        public Brush ConnectionStatusBackground
+        {
+            get => _connectionStatusBackground;
+            set => SetProperty(ref _connectionStatusBackground, value);
         }
 
         public ICommand SearchCommand { get; }
@@ -66,9 +75,15 @@ namespace DesktopApp
         private void UpdateConnectionStatusIcon(object? state)
         {
             if (CheckConnection())
-                ConnectionStatusIcon = ConnectionOkIcon;
+            {
+                ConnectionStatusIcon = connectionOkIcon;
+                ConnectionStatusBackground = connectionStatusOkBackground;
+            }
             else
-                ConnectionStatusIcon = ConnectionFailedIcon;
+            {
+                ConnectionStatusIcon = connectionFailedIcon;
+                ConnectionStatusBackground = connectionStatusFailBackground;
+            }
         }
 
     }

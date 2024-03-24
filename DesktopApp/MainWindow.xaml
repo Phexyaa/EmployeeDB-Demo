@@ -13,13 +13,14 @@
 		<local:MainWindowViewModel />
 	</Window.DataContext>
 	<Grid x:Name="MainGrid">
-		<DataGrid x:Name="ResultsDataGrid"
-				  ItemsSource="{Binding Employees}"
-				  Margin="5,35,5,5"
-				  Width="NaN" />
+		<Grid.RowDefinitions>
+			<RowDefinition Height="25" />
+			<RowDefinition Height="1*" />
+		</Grid.RowDefinitions>
 		<Grid x:Name="SearchGrid"
 			  VerticalAlignment="Top"
-			  Width="NaN">
+			  Width="NaN"
+			  Grid.Row="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 				<ColumnDefinition />
@@ -31,14 +32,14 @@
 					 VerticalAlignment="Top"
 					 Grid.Column="1"
 					 Text="{Binding Employee.FirstName}"
-					 Height="25"/>
+					 Height="25" />
 			<Button x:Name="SearchButton"
 					Margin="0,5,0,0"
 					HorizontalAlignment="Right"
 					VerticalAlignment="Top"
 					Grid.Column="1"
 					Command="{Binding SearchCommand}"
-					CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
+					CommandParameter="{Binding Text, ElementName=SearchBox}"
 					Height="25"
 					Width="25"
 					Background="#FF5D4949">
@@ -52,14 +53,32 @@
 						   VerticalAlignment="Center" />
 				</Grid>
 			</Button>
+		</Grid>
+		<DataGrid x:Name="ResultsDataGrid"
+				  ItemsSource="{Binding Employees}"
+				  Margin="5,5,5,5"
+				  Width="auto"
+				  Height="auto"
+				  Grid.Row="1" />
+		<Grid x:Name="LinkStatusGrid"
+			  HorizontalAlignment="Right"
+			  VerticalAlignment="Top"
+			  Margin="0,5,5,0"
+			  Width="20"
+			  Height="20">
 			<Image x:Name="LinkStatusIcon"
-				   Width="16"
-				   Grid.Column="2"
-				   Height="16"
-				   HorizontalAlignment="Right"
-				   VerticalAlignment="Center"
 				   Source="{Binding ConnectionStatusIcon}"
-				   Margin="0,0,5,0" />
+				   Width="16"
+				   Height="16"
+				   MinWidth="16"
+				   MinHeight="16"
+				   Panel.ZIndex="1" />
+			<Rectangle x:Name="LinkIconBackground"
+					   Fill="{Binding ConnectionStatusBackground}"
+					   Stroke="Black"
+					   RadiusX="5"
+					   RadiusY="5"
+					   StrokeThickness="1" />
 		</Grid>
 	</Grid>
 </Window>
