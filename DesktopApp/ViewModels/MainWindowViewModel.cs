@@ -18,7 +18,10 @@ namespace DesktopApp
     class MainWindowViewModel : ObservableObject
     {
         private readonly IApiService? _apiService;
+        private readonly Timer _connectionTestTimer;
+
         public string Title { get; set; } = "Employee Lookup Demo";
+        public string CriteriaLabelText { get; set; } = "Search by:";
 
         private ImageSource connectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
         private ImageSource connectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
@@ -46,7 +49,6 @@ namespace DesktopApp
             get => _employees;
             set => SetProperty(ref _employees, value);
         }
-        private readonly Timer _connectionTestTimer;
         public MainWindowViewModel()
         {
             _apiService = App.Current.Services.GetService<IApiService>();
