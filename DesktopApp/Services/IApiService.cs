@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DesktopApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DesktopApp
 {
-    class MainWindowViewModel
+    interface IApiService
     {
-        public string SearchBox { get; set; } = "test";
+        public List<Employee> GetEmployees();
     }
 }

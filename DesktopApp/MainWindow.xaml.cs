@@ -19,7 +19,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        SearchBox.Text = LinkStatusImageSource;
         LinkStatusIcon.Source = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
     }
 }
