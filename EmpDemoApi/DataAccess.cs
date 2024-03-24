@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
+using Shared.Models;
 using System.Data;
 using System.Runtime.CompilerServices;
 

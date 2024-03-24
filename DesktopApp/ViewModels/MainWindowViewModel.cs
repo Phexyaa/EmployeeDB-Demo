@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DesktopApp.Models;
+using Shared.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,38 +10,65 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace DesktopApp
 {
     class MainWindowViewModel : ObservableObject
     {
         private readonly IApiService? _apiService;
-        public string Title { get; set; } = "test";
-        public Employee Employee { get; set; } = new Employee();
+        public string Title { get; set; } = "Employee Lookup Demo";
+
+        private ImageSource ConnectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
+        private ImageSource ConnectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
+        private ImageSource _connectionStatusIcon;
+        public ImageSource ConnectionStatusIcon
+        {
+            get => _connectionStatusIcon;
+            set => SetProperty(ref _connectionStatusIcon, value);
+        }
 
         public ICommand SearchCommand { get; }
+
         private List<Employee>? _employees;
         public List<Employee>? Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);
         }
+        private readonly Timer _connectionTestTimer;
         public MainWindowViewModel()
         {
             _apiService = App.Current.Services.GetService<IApiService>();
-            Employee.FirstName = "George";
+            if (_apiService == null)
+                throw new NullReferenceException(nameof(_apiService));
+
             SearchCommand = new RelayCommand<string>(Search);
+
+            _connectionTestTimer = new Timer(UpdateConnectionStatusIcon, null, 0, 10000);
+
         }
 
-        public void Search(string keyword)
+        public void Search(string? keyword)
         {
-            if (_apiService != null)
-            {
-                if (!string.IsNullOrWhiteSpace(keyword))
-                    Employees = _apiService.GetEmployees().Where(e => e.FirstName.StartsWith(keyword)).ToList();
-                else
-                    Employees = _apiService.GetEmployees();
-            }
+            if (!string.IsNullOrWhiteSpace(keyword))
+                Employees = _apiService!.GetEmployees()
+                    .Where(e =>
+                        (e.FirstName != null && e.FirstName.Contains(keyword))
+                        || (e.LastName != null && e.LastName.Contains(keyword))).ToList();
+            else
+                Employees = _apiService!.GetEmployees();
+        }
+
+        private bool CheckConnection() => _apiService!.GetConnectionStatus();
+
+        private void UpdateConnectionStatusIcon(object? state)
+        {
+            if (CheckConnection())
+                ConnectionStatusIcon = ConnectionOkIcon;
+            else
+                ConnectionStatusIcon = ConnectionFailedIcon;
         }
 
     }

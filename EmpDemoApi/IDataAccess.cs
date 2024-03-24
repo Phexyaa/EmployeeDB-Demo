@@ -1,4 +1,6 @@
-﻿namespace EmpDemoApi;
+﻿using Shared.Models;
+
+namespace EmpDemoApi;
 
 public interface IDataAccess
 {

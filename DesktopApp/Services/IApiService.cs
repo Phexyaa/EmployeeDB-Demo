@@ -1,4 +1,4 @@
-﻿using DesktopApp.Models;
+﻿using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +10,6 @@ namespace DesktopApp
     interface IApiService
     {
         public List<Employee> GetEmployees();
+        public bool GetConnectionStatus();
     }
 }

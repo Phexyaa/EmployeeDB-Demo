@@ -15,10 +15,8 @@ namespace DesktopApp;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public string LinkStatusImageSource { get; set; } = "/Assets/database-check.png";
     public MainWindow()
     {
         InitializeComponent();
-        LinkStatusIcon.Source = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
     }
 }

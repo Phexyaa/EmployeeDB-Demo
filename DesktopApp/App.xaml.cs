@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Data;
+using System.Net.Http;
 using System.Windows;
 using DesktopApp.Mock;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,10 @@ public partial class App : Application
     private static IServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
+
         services.AddSingleton<IApiService, MockApi>();
+        services.AddSingleton<HttpClient>();
+
         return services.BuildServiceProvider();
     }
 }
