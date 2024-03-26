@@ -18,8 +18,8 @@ namespace DesktopApp
 
         private ImageSource connectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
         private ImageSource connectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
-        private ImageSource _connectionStatusIcon;
-        public ImageSource ConnectionStatusIcon
+        private ImageSource? _connectionStatusIcon;
+        public ImageSource? ConnectionStatusIcon
         {
             get => _connectionStatusIcon;
             set => SetProperty(ref _connectionStatusIcon, value);
@@ -27,8 +27,8 @@ namespace DesktopApp
 
         private Brush connectionStatusOkBackground = Brushes.Green;
         private Brush connectionStatusFailBackground = Brushes.Red;
-        private Brush _connectionStatusBackground;
-        public Brush ConnectionStatusBackground
+        private Brush? _connectionStatusBackground;
+        public Brush? ConnectionStatusBackground
         {
             get => _connectionStatusBackground;
             set => SetProperty(ref _connectionStatusBackground, value);
