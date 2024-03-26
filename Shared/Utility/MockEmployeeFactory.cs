@@ -155,7 +155,7 @@ public class MockEmployeeFactory : IEmployeeFactory
     private static int RandomMonth => new Random().Next(1, 13);
     private static int RandomYear => new Random().Next(1900, 2025);
     private static int RandomSalary => new Random().Next(60000, 125001);
-    private static DateTime RandomDate => new DateTime(RandomDay, RandomMonth, RandomYear);
+    private static DateTime RandomDate => new DateTime(RandomYear, RandomMonth, RandomDay);
 
     public MockEmployeeFactory(Defaults defaults) => _defaults = defaults;
 
