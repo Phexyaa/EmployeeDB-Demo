@@ -1,4 +1,6 @@
-﻿namespace Shared.Global;
+﻿using Shared.Enums;
+
+namespace Shared.Global;
 public class Defaults
 {
     public List<string> Titles { get; } =
@@ -11,13 +13,14 @@ public class Defaults
         "N/A"
     };
 
-    public List<string> SearchCriteria { get; } = new List<string>()
+    public Dictionary<SearchCriteria, string> SearchCriteriaToString { get; } = 
+        new Dictionary<SearchCriteria, string>()
     {
-        "First Name",
-        "Last Name",
-        "Hire Date",
-        "Age",
-        "Title",
-        "Salary"
+            {SearchCriteria.FirstName, "First Name" },
+            {SearchCriteria.LastName, "Last Name" },
+            {SearchCriteria.Salary, "Salary" },
+            {SearchCriteria.HireDate, "Hire Date" },
+            {SearchCriteria.Age, "Age" },
+            {SearchCriteria.Title, "Title" }
     };
 }
