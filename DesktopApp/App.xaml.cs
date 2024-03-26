@@ -1,10 +1,9 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Windows;
 using DesktopApp.Mock;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shared.Utility;
 
 namespace DesktopApp;
 /// <summary>
@@ -29,6 +28,7 @@ public partial class App : Application
 
         services.AddSingleton<IApiService, MockApi>();
         services.AddSingleton<HttpClient>();
+        services.AddTransient<IEmployeeFactory, MockEmployeeFactory>();
 
         return services.BuildServiceProvider();
     }
