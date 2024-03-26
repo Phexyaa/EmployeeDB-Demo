@@ -1,4 +1,5 @@
 ﻿using Shared.Models;
+using Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace DesktopApp.Mock
 {
-    class MockApi: IApiService
+    class MockApi : IApiService
     {
-        public List<Employee> GetEmployees()
+        private readonly IEmployeeFactory _employeeFactory;
+        public MockApi(IEmployeeFactory employeeFactory)
         {
-           var list = new List<Employee>();
+            _employeeFactory = employeeFactory;
+        }
+        public List<Person> GetEmployees()
+        {
+            var list = new List<Person>();
             var rando = new Random().Next(1, 26);
-            for(int i = 0; i < rando; i++)
+            for (int i = 0; i < rando; i++)
             {
-                var employee = new Employee();
-                employee.FirstName = new Random().Next(3000, int.MaxValue).ToString();
-                employee.LastName = new Random().Next(3000, int.MaxValue).ToString();
-                employee.Age = new Random().Next(1, 101);
-                list.Add(employee);
+                list.Add(_employeeFactory.CreateEmployee("","",0,"",DateTime.Now,0));
             }
             return list;
         }
