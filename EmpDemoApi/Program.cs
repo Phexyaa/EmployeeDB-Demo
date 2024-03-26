@@ -1,6 +1,7 @@
 using API.Data;
 using EmpDemoApi;
 using Shared.Global;
+using Shared.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 

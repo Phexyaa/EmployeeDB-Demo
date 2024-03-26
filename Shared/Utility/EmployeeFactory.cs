@@ -1,6 +1,6 @@
 ﻿using Shared.Models;
 
-namespace API.Data;
+namespace Shared.Utility;
 
 public class EmployeeFactory : IEmployeeFactory
 {
