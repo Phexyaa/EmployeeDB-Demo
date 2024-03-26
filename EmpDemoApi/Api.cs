@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Shared.Models;
+﻿using Shared.Models;
 
 namespace EmpDemoApi;
 
