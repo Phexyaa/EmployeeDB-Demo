@@ -3,7 +3,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Shared.Models;
 
-public class Person : ObservableObject
+public abstract class Person : ObservableObject
 {
     public Guid Id { get; set; }
     private string? _firstName;
