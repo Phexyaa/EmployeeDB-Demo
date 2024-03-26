@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using API.Data;
+using Shared.Models;
 
 namespace EmpDemoApi;
 
@@ -11,7 +12,7 @@ public static class Api
         app.MapGet("/GetStatus", ConnectionTest).WithName("ConnectionTest").WithOpenApi();
     }
 
-    private static IQueryable<Person> GetPeople(IDataAccess data)
+    private static IQueryable<Employee> GetPeople(IDataAccess data)
     {
         return data.GetPeople();
     }
