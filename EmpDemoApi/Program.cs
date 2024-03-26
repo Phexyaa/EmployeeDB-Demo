@@ -1,4 +1,6 @@
+using API.Data;
 using EmpDemoApi;
+using Shared.Global;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IDataAccess, DataAccess>();
+builder.Services.AddTransient<IEmployeeFactory, MockEmployeeFactory>(); //Mocking employee for now
+builder.Services.AddTransient<Defaults>();
 
 var app = builder.Build();
 
