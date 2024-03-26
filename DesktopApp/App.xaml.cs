@@ -3,6 +3,7 @@ using System.Windows;
 using DesktopApp.Mock;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shared.Global;
 using Shared.Utility;
 
 namespace DesktopApp;
@@ -29,6 +30,7 @@ public partial class App : Application
         services.AddSingleton<IApiService, MockApi>();
         services.AddSingleton<HttpClient>();
         services.AddTransient<IEmployeeFactory, MockEmployeeFactory>();
+        services.AddTransient<Defaults>();
 
         return services.BuildServiceProvider();
     }
