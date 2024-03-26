@@ -29,7 +29,18 @@
 				  Width="auto"
 				  Height="auto"
 				  Grid.Row="1"
-				  Grid.ColumnSpan="3">
+				  Grid.ColumnSpan="3"
+				  AutoGenerateColumns="False"
+				  CanUserAddRows="False"
+				  AlternatingRowBackground="LightGray">
+			<DataGrid.Resources>
+				<DataTemplate x:Key="HireDateTemplate">
+					<DatePicker IsHitTestVisible="False" 
+								SelectedDate="{Binding HireDate}" 
+								IsManipulationEnabled="False"
+								Width="150"/>
+				</DataTemplate>
+			</DataGrid.Resources>
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="First Name"
 									Binding="{Binding FirstName}" />
@@ -38,9 +49,10 @@
 				<DataGridTextColumn Header="Age"
 									Binding="{Binding Age}" />
 				<DataGridTextColumn Header="Salary"
-									Binding="{Binding Salary}" />
-				<DataGridTextColumn Header="Hire Date"
-									Binding="{Binding HireDate}" />
+									Binding="{Binding Salary, StringFormat=C}"/>
+				<DataGridTemplateColumn Header="Hire Date"
+										CellTemplate="{StaticResource HireDateTemplate }" />
+				<DataGridTextColumn Width="1*" />
 			</DataGrid.Columns>
 		</DataGrid>
 		<Grid x:Name="TopRowCenterGrid"
