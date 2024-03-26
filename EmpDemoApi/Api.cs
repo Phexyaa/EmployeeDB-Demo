@@ -14,7 +14,7 @@ public static class Api
 
     private static IQueryable<Employee> GetPeople(IDataAccess data)
     {
-        return data.GetPeople();
+        return data.GetAllEmployees();
     }
     private static void ConnectionTest()
     {

@@ -4,5 +4,5 @@ namespace API.Data;
 
 public interface IDataAccess
 {
-    IQueryable<Employee> GetPeople();
+    IQueryable<Employee> GetAllEmployees();
 }
