@@ -1,17 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Drawing;
-using System.Security.AccessControl;
-using System;
-using Microsoft.Extensions.Hosting;
-using System.Diagnostics.Metrics;
-using System.Data;
-using Shared.Models;
+﻿using Shared.Models;
 using Shared.Global;
-using System.Collections.Generic;
-using Shared.Utility;
 
-namespace API.Data;
+namespace Shared.Utility;
 
 public class MockEmployeeFactory : IEmployeeFactory
 {
