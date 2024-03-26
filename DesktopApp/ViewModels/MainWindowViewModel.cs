@@ -43,8 +43,8 @@ namespace DesktopApp
 
         public ICommand SearchCommand { get; }
 
-        private List<Employee>? _employees;
-        public List<Employee>? Employees
+        private List<Person>? _employees;
+        public List<Person>? Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);

@@ -9,7 +9,7 @@ namespace DesktopApp
 {
     interface IApiService
     {
-        public List<Employee> GetEmployees();
+        public List<Person> GetEmployees();
         public bool GetConnectionStatus();
     }
 }

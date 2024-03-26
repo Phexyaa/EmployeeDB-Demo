@@ -9,7 +9,7 @@ namespace DesktopApp
 {
     class ApiService :IApiService
     {
-        public List<Employee> GetEmployees()
+        public List<Person> GetEmployees()
         {
             throw new NotImplementedException();
         }
