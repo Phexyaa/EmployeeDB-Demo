@@ -16,8 +16,8 @@ public static class Api
     {
         return data.GetAllEmployees();
     }
-    private static void ConnectionTest()
+    private static bool ConnectionTest()
     {
-
+        return true;
     }
 }
