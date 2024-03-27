@@ -9,8 +9,8 @@
             set => SetProperty(ref _title, value);
         }
 
-        private int _salary;
-        public int Salary
+        private decimal _salary;
+        public decimal Salary
         {
             get => _salary;
             set => SetProperty(ref _salary, value);
