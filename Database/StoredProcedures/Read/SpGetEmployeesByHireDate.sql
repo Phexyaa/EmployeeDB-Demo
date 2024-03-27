@@ -1,8 +1,8 @@
 CREATE PROCEDURE [dbo].[SpGetEmployeeByHireDate]
 	@HireDate date,
-	@EqualTo bit = 0,
 	@GreaterThan bit = 0,
-	@LEssThan bit = 0
+	@LessThan bit = 0,
+	@EqualTo bit = 0
 AS
 BEGIN
 	IF @EqualTo = 1
