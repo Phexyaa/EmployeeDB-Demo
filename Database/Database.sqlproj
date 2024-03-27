@@ -57,21 +57,26 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="StoredProcedures\" />
+    <Folder Include="StoredProcedures\Create" />
+    <Folder Include="StoredProcedures\Update" />
+    <Folder Include="StoredProcedures\Read\" />
+    <Folder Include="StoredProcedures\Delete" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Employee.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeByTitle.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeByAge.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeByEmployeeId.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeByHireDate.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeById.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeByName.sql" />
-    <Build Include="StoredProcedures\SpGetEmployeeBySalary.sql" />
-    <Build Include="StoredProcedures\SpGetAllActiveEmployees.sql" />
-    <Build Include="StoredProcedures\SpInsertEmployee.sql" />
-    <Build Include="StoredProcedures\SpGetAllInactiveEmployees.sql" />
-    <Build Include="StoredProcedures\SpGetAllEmployees.sql" />
-    <Build Include="StoredProcedures\SpUpdateEmployee.sql" />
+    <Build Include="StoredProcedures\Read\SpGetAllActiveEmployees.sql" />
+    <Build Include="StoredProcedures\Read\SpGetAllEmployees.sql" />
+    <Build Include="StoredProcedures\Read\SpGetAllInactiveEmployees.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeByAge.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeByEmployeeId.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeByHireDate.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeById.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeByName.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeBySalary.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeByTitle.sql" />
+    <Build Include="StoredProcedures\Create\SpInsertEmployee.sql" />
+    <Build Include="StoredProcedures\Update\SpUpdateEmployee.sql" />
+    <Build Include="StoredProcedures\Delete\SpDeleteEmployeeRecord.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />
