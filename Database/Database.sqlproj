@@ -69,9 +69,9 @@
     <Build Include="StoredProcedures\SpGetEmployeeBySalary.sql" />
     <Build Include="StoredProcedures\SpGetAllActiveEmployees.sql" />
     <Build Include="StoredProcedures\SpInsertEmployee.sql" />
-    <Build Include="SpUpdateEmployee.sql" />
     <Build Include="StoredProcedures\SpGetAllInactiveEmployees.sql" />
     <Build Include="StoredProcedures\SpGetAllEmployees.sql" />
+    <Build Include="StoredProcedures\SpUpdateEmployee.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />
