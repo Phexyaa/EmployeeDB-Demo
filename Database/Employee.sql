@@ -5,6 +5,7 @@
     [LastName] NVARCHAR(50) NOT NULL, 
     [Age] INT NULL, 
     [Salary] INT NOT NULL, 
-    [HireDate] DATETIME NOT NULL
+    [HireDate] DATE NOT NULL
 , 
-    [EmpoloyeeId] NVARCHAR(50) NULL)
+    [EmployeeId] NVARCHAR(50) NOT NULL, 
+    [Title] NVARCHAR(50) NOT NULL)
