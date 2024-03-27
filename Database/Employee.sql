@@ -8,4 +8,5 @@
     [HireDate] DATE NOT NULL
 , 
     [EmployeeId] NVARCHAR(50) NOT NULL, 
-    [Title] NVARCHAR(50) NOT NULL)
+    [Title] NVARCHAR(50) NOT NULL, 
+    [IsActive] BIT NOT NULL)
