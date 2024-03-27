@@ -14,11 +14,32 @@ public class DataAccess : IDataAccess
     {
         _config = config;
     }
-    internal IQueryable<Employee> GetAllEmployees()
+    public IQueryable<Employee>? GetAllEmployees()
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var temp = connection.Query<Employee>("SpGetPeople", null, commandType: CommandType.StoredProcedure).AsQueryable();
         return temp;
     }
 
+    internal IQueryable<Employee>? GetSpecificEmployees(SearchCriteria criteria, string keyword)
+    {
+        return null;
+        switch (criteria)
+        {
+            case SearchCriteria.FirstName:
+                break;
+            case SearchCriteria.LastName:
+                break;
+            case SearchCriteria.HireDate:
+                break;
+            case SearchCriteria.Age:
+                break;
+            case SearchCriteria.Title:
+                break;
+            case SearchCriteria.Salary:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(criteria));
+        }
+    }
 }
