@@ -1,5 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[SpGetPeople]
+﻿CREATE PROCEDURE [dbo].[SpGetEmployee]
 as
 begin
-Select * From dbo.People
+Select * From dbo.Employees
 end
