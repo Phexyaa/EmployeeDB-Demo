@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[SpGetEmployeeBySalary]
 	@Salary money = 0,
-	@GreaterThan binary = 0,
-	@LessThan binary = 0,
-	@EqualTo binary = 0
+	@GreaterThan bit = 0,
+	@LessThan bit = 0,
+	@EqualTo bit = 0
 AS
 BEGIN
 	IF @EqualTo = 1
