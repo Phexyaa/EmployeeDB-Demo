@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using Shared.Enums;
 
 namespace DesktopApp
 {
@@ -15,6 +16,13 @@ namespace DesktopApp
 
         public string Title { get; set; } = "Employee Lookup Demo";
         public string CriteriaLabelText { get; set; } = "Search by:";
+
+        public SearchCriteria _selectedSearchCriteria = SearchCriteria.LastName;
+        public SearchCriteria SelectedSearchCriteria
+        {
+            get => _selectedSearchCriteria;
+            set => SetProperty(ref _selectedSearchCriteria, value);
+        }
 
         private ImageSource connectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
         private ImageSource connectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
@@ -56,6 +64,7 @@ namespace DesktopApp
 
         public void Search(string? keyword)
         {
+            var criteria = SelectedSearchCriteria;
             if (!string.IsNullOrWhiteSpace(keyword))
                 Employees = _apiService!.GetEmployees()
                     .Where(e =>
