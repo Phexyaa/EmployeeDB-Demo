@@ -58,10 +58,13 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="People.sql" />
-    <Build Include="SpGetPeople.sql" />
+    <Build Include="Employee.sql" />
+    <Build Include="SpGetEmployee.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>
