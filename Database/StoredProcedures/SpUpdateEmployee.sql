@@ -5,7 +5,8 @@ CREATE PROCEDURE [dbo].[SpUpdateEmployee]
 	@Salary int,
 	@Age int,
 	@Title nvarchar(50),
-	@EmployeeId nvarchar(50)
+	@EmployeeId nvarchar(50),
+	@IsActive bit
 AS
 	UPDATE dbo.Employees SET 
 	FirstName = @FirstName,
@@ -13,6 +14,7 @@ AS
 	Salary = @Salary,
 	Age = @Age,
 	Title = @Title,
-	EmployeeId = @EmployeeId
+	EmployeeId = @EmployeeId,
+	IsActive = @IsActive
 
 	WHERE Id = @Id
