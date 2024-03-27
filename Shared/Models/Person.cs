@@ -4,7 +4,7 @@ namespace Shared.Models;
 
 public abstract class Person : ObservableObject
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     private string? _firstName;
     public string? FirstName
     {
@@ -23,6 +23,4 @@ public abstract class Person : ObservableObject
         get => _age;
         set => SetProperty(ref _age, value);
     }
-
-    public Person() => Id = Guid.NewGuid();
 }

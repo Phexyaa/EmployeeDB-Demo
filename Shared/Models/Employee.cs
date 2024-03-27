@@ -22,6 +22,12 @@
             get => _hireDate;
             set => SetProperty(ref _hireDate, value);
         }
+        private Guid _employeeId;
+        public Guid EmployeeId
+        {
+            get => _employeeId; 
+            set => SetProperty(ref _employeeId, value);
+        }
 
     }
 }

@@ -14,6 +14,7 @@ public class EmployeeFactory : IEmployeeFactory
             Salary = salary,
             Title = title,
             HireDate = hireDate,
+            EmployeeId = Guid.NewGuid(),
         };
     }
 }
