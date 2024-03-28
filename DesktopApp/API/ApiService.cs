@@ -1,79 +1,242 @@
-﻿using Shared.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Shared.Interfaces;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DesktopApp.API;
 internal class ApiService : IApiService
 {
-    public bool ConnectionTest()
+    private readonly ApiOptions? _options;
+    private readonly HttpClient _client;
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
+    public ApiService()
     {
-        throw new NotImplementedException();
+        _options = App.Current.Services.GetRequiredService<IOptionsMonitor<ApiOptions>>().CurrentValue;
+        if (_options is null || _options.AllowedHost is null)
+            throw new NullReferenceException(nameof(_options));
+
+        _client = App.Current.Services.GetRequiredService<HttpClient>();
+        if (_client is null)
+            throw new NullReferenceException(nameof(_client));
+        else
+            _client.BaseAddress = new Uri(_options.AllowedHost);
+
+        _jsonSerializerOptions = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true,
+        };
     }
-    public IQueryable<Employee> GetAllEmployees()
+    public async Task<bool> ConnectionTest()
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("ConnectionTest");
+        if (response.IsSuccessStatusCode)
+            return true;
+        else
+            return false;
     }
 
-    public IQueryable<Employee> GetAllActiveEmployees()
+    public async Task<Employee?> GetEmployeeByEmployeeId(Guid employeeId)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeeByEmployeeId");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<Employee>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result;
+            else
+                return new Employee();
+        }
+        else
+            return new Employee();
     }
 
-    public IQueryable<Employee> GetAllInactiveEmployees()
+    public async Task<Employee?> GetEmployeeByDatabaseId(int databaseId)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeeByDatabaseId");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<Employee>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result;
+            else
+                return new Employee();
+        }
+        else
+            return new Employee();
+    }
+    public async Task<IQueryable<Employee?>> GetAllEmployees()
+    {
+        var response = await _client.GetAsync("GetAllEmployees");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public Employee GetEmployeeByEmployeeId(Guid employeeId)
+    public async Task<IQueryable<Employee?>> GetAllActiveEmployees()
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetAllActiveEmployees");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public Employee GetEmployeeByDatabaseId(int databaseId)
+    public async Task<IQueryable<Employee?>> GetAllInactiveEmployees()
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetAllInactiveEmployees");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public IQueryable<Employee> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<IQueryable<Employee?>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeesByAge");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public IQueryable<Employee> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<IQueryable<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeesByHireDate");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public IQueryable<Employee> GetEmployeesByName(string firstName, string lastName)
+    public async Task<IQueryable<Employee?>> GetEmployeesByName(string firstName, string lastName)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeesByName");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public IQueryable<Employee> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<IQueryable<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeesBySalary");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public IQueryable<Employee> GetEmployeesByTitle(string title)
+    public async Task<IQueryable<Employee?>> GetEmployeesByTitle(string title)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("GetEmployeesByTitle");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
     }
 
-    public int InsertEmployee(Employee employee)
+    public async Task<int> InsertEmployee(Employee employee)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("InsertEmployee");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<int>(json, _jsonSerializerOptions);
+            return result;
+        }
+        else
+            return 0;
     }
 
-    public int UpdateEmployee(Employee employee)
+    public async Task<int> UpdateEmployee(Employee employee)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("UpdateEmployee");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<int>(json, _jsonSerializerOptions);
+            return result;
+        }
+        else
+            return 0;
     }
-    public int DeleteEmployeeRecord(int databaseId)
+    public async Task<int> DeleteEmployeeRecord(int databaseId)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync("DeleteEmployeeRecord");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<int>(json, _jsonSerializerOptions);
+            return result;
+        }
+        else
+            return 0;
     }
 }
