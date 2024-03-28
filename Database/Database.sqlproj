@@ -70,7 +70,7 @@
     <Build Include="StoredProcedures\Read\SpGetEmployeesByAge.sql" />
     <Build Include="StoredProcedures\Read\SpGetEmployeeByEmployeeId.sql" />
     <Build Include="StoredProcedures\Read\SpGetEmployeesByHireDate.sql" />
-    <Build Include="StoredProcedures\Read\SpGetEmployeeById.sql" />
+    <Build Include="StoredProcedures\Read\SpGetEmployeeByDatabaseId.sql" />
     <Build Include="StoredProcedures\Read\SpGetEmployeesByName.sql" />
     <Build Include="StoredProcedures\Read\SpGetEmployeesBySalary.sql" />
     <Build Include="StoredProcedures\Read\SpGetEmployeesByTitle.sql" />

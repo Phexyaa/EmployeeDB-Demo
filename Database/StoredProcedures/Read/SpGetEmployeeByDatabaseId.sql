@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SpGetEmployeeById]
+﻿CREATE PROCEDURE [dbo].[SpGetEmployeeByDatabaseId]
 	@EmployeeId nvarchar(50)
 AS
 BEGIN

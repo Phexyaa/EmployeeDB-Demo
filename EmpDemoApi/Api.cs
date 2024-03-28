@@ -41,15 +41,15 @@ public static class Api
     {
         return data.GetAllInactiveEmployees();
     }
-    private static Employee? GetEmployeeByEmployeeId([FromServices] IDataAccess data,
-                                                                 [FromRoute] Guid employeeId)
-    {
-        return data.GetEmployeeByEmployeeId(employeeId);
-    }
     private static Employee? GetEmployeeByDatabaseId([FromServices] IDataAccess data,
                                                                  [FromRoute] int databaseId)
     {
         return data.GetEmployeeByDatabaseId(databaseId);
+    }
+    private static Employee? GetEmployeeByEmployeeId([FromServices] IDataAccess data,
+                                                                 [FromRoute] Guid employeeId)
+    {
+        return data.GetEmployeeByEmployeeId(employeeId);
     }
     private static IQueryable<Employee>? GetEmployeesByAge([FromServices] IDataAccess data,
                                                            [FromRoute] int age,
