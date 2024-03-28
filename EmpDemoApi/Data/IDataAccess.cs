@@ -7,8 +7,8 @@ public interface IDataAccess
     IQueryable<Employee>? GetAllActiveEmployees();
     IQueryable<Employee>? GetAllEmployees();
     IQueryable<Employee>? GetAllInactiveEmployees();
-    IQueryable<Employee>? GetEmployeeByDatabaseId(int databaseId);
-    IQueryable<Employee>? GetEmployeeByEmployeeId(Guid id);
+    Employee? GetEmployeeByDatabaseId(int databaseId);
+    Employee? GetEmployeeByEmployeeId(Guid id);
     IQueryable<Employee>? GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true);
     IQueryable<Employee>? GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true);
     IQueryable<Employee>? GetEmployeesByName(string? firstName = null, string? lastName = null);

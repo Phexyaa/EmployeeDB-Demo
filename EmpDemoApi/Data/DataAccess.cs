@@ -29,16 +29,16 @@ public class DataAccess : IDataAccess
         var result = connection.Query<Employee>("SpGetAllInactiveEmployees", false, null, commandType: CommandType.StoredProcedure).AsQueryable();
         return result;
     }
-    public IQueryable<Employee>? GetEmployeeByEmployeeId(Guid id)
+    public Employee? GetEmployeeByEmployeeId(Guid id)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var result = connection.Query<Employee>("SpGetEmployeesByEmployeeId", id, null, commandType: CommandType.StoredProcedure).AsQueryable();
+        var result = connection.Query<Employee>("SpGetEmployeesByEmployeeId", id, null, commandType: CommandType.StoredProcedure).FirstOrDefault();
         return result;
     }
-    public IQueryable<Employee>? GetEmployeeByDatabaseId(int databaseId)
+    public Employee? GetEmployeeByDatabaseId(int databaseId)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var result = connection.Query<Employee>("SpGetEmployeeById", databaseId, null, commandType: CommandType.StoredProcedure).AsQueryable();
+        var result = connection.Query<Employee>("SpGetEmployeeById", databaseId, null, commandType: CommandType.StoredProcedure).FirstOrDefault();
         return result;
     }
     public IQueryable<Employee>? GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
