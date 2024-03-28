@@ -5,7 +5,6 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:DesktopApp"
 		xmlns:mwvm="DesktopApp"
-		xmlns:globals="clr-namespace:Shared.Global;assembly=Shared"
 		mc:Ignorable="d"
 		Title="{Binding Title}"
 		Height="450"

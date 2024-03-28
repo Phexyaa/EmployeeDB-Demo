@@ -6,8 +6,9 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Shared.Enums;
-using DesktopApp.Services;
 using Microsoft.Extensions.Options;
+using Shared.Global;
+using Microsoft.Extensions.FileProviders;
 
 namespace DesktopApp
 {
@@ -15,8 +16,8 @@ namespace DesktopApp
     {
         private readonly IApiService? _apiService;
         private readonly Timer _connectionTestTimer;
-        private readonly Settings? _settings;
-        public Settings Settings { get => _settings; }
+        private readonly Defaults? _defaults;
+        public Defaults? Settings { get => _defaults; }
         public string Title { get; set; } = "Employee Lookup Demo";
         public string CriteriaLabelText { get; set; } = "Search by:";
 
@@ -55,9 +56,11 @@ namespace DesktopApp
         }
         public MainWindowViewModel()
         {
-            _settings = App.Current.Services.GetService<IOptionsMonitor<Settings>>().CurrentValue;
-            if (_settings is null)
-                throw new NullReferenceException(nameof(_settings));
+            var defaultService = App.Current.Services.GetService<IOptionsMonitor<Defaults>>();
+            if (defaultService is not null)
+                _defaults = defaultService.CurrentValue;
+            if (_defaults is null)
+                throw new NullReferenceException(nameof(_defaults));
 
             _apiService = App.Current.Services.GetService<IApiService>();
             if (_apiService == null)
@@ -71,7 +74,7 @@ namespace DesktopApp
 
         public void Search(string? keyword)
         {
-            var criteria = _settings!.SearchCriteriaToString; //SelectedSearchCriteria;
+            var criteria = _defaults!.SearchCriteriaToString;
             if (!string.IsNullOrWhiteSpace(keyword))
                 Employees = _apiService!.GetEmployees()
                     .Where(e =>

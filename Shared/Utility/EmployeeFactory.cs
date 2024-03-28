@@ -30,7 +30,7 @@ public class EmployeeFactory : IEmployeeFactory
             LastName = "Tallse",
             Age = 72,
             Salary = 103400.50m,
-            Title = _defaults.Titles[new Random().Next(0, _defaults.Titles.Count)],
+            Title = _defaults.EmployeeTitles[new Random().Next(0, _defaults.EmployeeTitles.Count)],
             HireDate = DateTime.Now - new TimeSpan(22, 0, 0, 0)
         };
     }

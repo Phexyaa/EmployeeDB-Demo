@@ -1,26 +1,32 @@
-﻿using Shared.Enums;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Shared.Enums;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Shared.Global;
-public class Defaults
+public class Defaults : ObservableObject
 {
-    public List<string> Titles { get; } =
-    new List<string>()
-    {
-        "Executive",
-        "Manager",
-        "Assistant Manager",
-        "Secretary",
-        "N/A"
-    };
+    private Dictionary<SearchCriteria, string> _searchCriteriaToString = new();
 
-    public Dictionary<SearchCriteria, string> SearchCriteriaToString { get; } = 
-        new Dictionary<SearchCriteria, string>()
+    [Required]
+    public Dictionary<SearchCriteria, string> SearchCriteriaToString
     {
-            {SearchCriteria.FirstName, "First Name" },
-            {SearchCriteria.LastName, "Last Name" },
-            {SearchCriteria.Salary, "Salary" },
-            {SearchCriteria.HireDate, "Hire Date" },
-            {SearchCriteria.Age, "Age" },
-            {SearchCriteria.Title, "Title" }
-    };
+        get => _searchCriteriaToString;
+        set => SetProperty(ref _searchCriteriaToString, value);
+    }
+    private List<string> _employeeTitles = new();
+
+    [Required]
+    public List<string> EmployeeTitles
+    {
+        get => _employeeTitles;
+        set => SetProperty(ref _employeeTitles, value);
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using Shared.Models;
 using Shared.Global;
+using System.Runtime.InteropServices.Marshalling;
+using Microsoft.Extensions.Options;
 
 namespace Shared.Utility;
 
@@ -157,7 +159,12 @@ public class MockEmployeeFactory : IEmployeeFactory
     private static int RandomSalary => new Random().Next(60000, 125001);
     private static DateTime RandomDate => new DateTime(RandomYear, RandomMonth, RandomDay);
 
-    public MockEmployeeFactory(Defaults defaults) => _defaults = defaults;
+    public MockEmployeeFactory(IOptions<Defaults> defaults)
+    {
+        _defaults = defaults.Value;
+        if(_defaults is null)
+            throw new NullReferenceException(nameof(_defaults));
+    }
 
     public Employee CreateGenericEmployee()
     {
@@ -173,7 +180,7 @@ public class MockEmployeeFactory : IEmployeeFactory
             FirstName = FirstNames[new Random().Next(0, FirstNames.Count)],
             LastName = LastNames[new Random().Next(0, LastNames.Count)],
             HireDate = RandomDate,
-            Title = _defaults.Titles[new Random().Next(0, _defaults.Titles.Count)],
+            Title = _defaults.EmployeeTitles![new Random().Next(0, _defaults.EmployeeTitles.Count)],
             EmployeeId = new Guid(),
         };
     }

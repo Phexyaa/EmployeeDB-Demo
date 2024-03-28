@@ -2,7 +2,6 @@
 using System.Text.Json;
 using System.Windows;
 using DesktopApp.Mock;
-using DesktopApp.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,7 +21,6 @@ public partial class App : Application
     private static HostApplicationBuilder builder = Host.CreateApplicationBuilder();
     private static IConfiguration _config => new ConfigurationBuilder()
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        .AddEnvironmentVariables()
         .Build();
 
     public App()
@@ -36,10 +34,9 @@ public partial class App : Application
 
         services.AddSingleton<IApiService, MockApi>();
         services.AddSingleton<HttpClient>();
-        services.Configure<Settings>(_config.GetSection("Defaults"));
         services.AddSingleton(_config);
         services.AddTransient<IEmployeeFactory, MockEmployeeFactory>();
-        services.AddTransient<Defaults>();
+        services.AddOptions<Defaults>().Bind(_config.GetRequiredSection("Defaults"));
 
         return services.BuildServiceProvider();
     }
