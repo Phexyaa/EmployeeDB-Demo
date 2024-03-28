@@ -159,7 +159,11 @@ public class MockEmployeeFactory : IEmployeeFactory
 
     public MockEmployeeFactory(Defaults defaults) => _defaults = defaults;
 
-    public Person CreateEmployee(string firstName = "", string lastName = "", int salary = 0, string title = "",
+    public Employee CreateGenericEmployee()
+    {
+        return CreateEmployee("", "", 0, "", new DateTime(), 0);
+    }
+    public Employee CreateEmployee(string firstName = "", string lastName = "", int salary = 0, string title = "",
                                  DateTime hireDate = new DateTime(), int age = 0)
     {
         return new Employee()

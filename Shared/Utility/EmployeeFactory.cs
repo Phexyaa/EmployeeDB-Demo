@@ -1,10 +1,16 @@
-﻿using Shared.Models;
+﻿using Shared.Global;
+using Shared.Models;
 
 namespace Shared.Utility;
 
 public class EmployeeFactory : IEmployeeFactory
 {
-    public Person CreateEmployee(string firstName, string lastName, int salary, string title, DateTime hireDate, int age = 0)
+    private readonly Defaults _defaults;
+    public EmployeeFactory(Defaults defaults)
+    {
+        _defaults = defaults;
+    }
+    public Employee CreateEmployee(string firstName, string lastName, int salary, string title, DateTime hireDate, int age = 0)
     {
         return new Employee()
         {
@@ -13,8 +19,19 @@ public class EmployeeFactory : IEmployeeFactory
             Age = age,
             Salary = salary,
             Title = title,
-            HireDate = hireDate,
-            EmployeeId = Guid.NewGuid(),
+            HireDate = hireDate
+        };
+    }
+    public Employee CreateGenericEmployee()
+    {
+        return new Employee()
+        {
+            FirstName = "Drewt",
+            LastName = "Tallse",
+            Age = 72,
+            Salary = 103400.50m,
+            Title = _defaults.Titles[new Random().Next(0, _defaults.Titles.Count)],
+            HireDate = DateTime.Now - new TimeSpan(22, 0, 0, 0)
         };
     }
 }
