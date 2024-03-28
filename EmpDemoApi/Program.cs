@@ -1,7 +1,8 @@
 using API.Data;
-using API.Testing;
 using EmpDemoApi;
 using Shared.Global;
+using Shared.Interfaces;
+using Shared.Test;
 using Shared.Utility;
 
 using IHost host = Host.CreateApplicationBuilder(args).Build();
@@ -13,7 +14,7 @@ var config = builder.Configuration;
 builder.Services.AddOptions<Defaults>().Bind(config.GetRequiredSection("Defaults"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IDataAccess, MockDataAccess>(); //Mocking data service for now
+builder.Services.AddSingleton<IDataService, MockDataAccess>(); //Mocking data service for now
 builder.Services.AddTransient<IEmployeeFactory, MockEmployeeFactory>(); //Mocking employee for now
 
 var app = builder.Build();

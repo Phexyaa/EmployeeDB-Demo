@@ -1,20 +1,16 @@
-﻿using API.Data;
+﻿using Shared.Interfaces;
 using Shared.Models;
 using Shared.Utility;
 using System.Linq.Expressions;
 
-namespace API.Testing;
+namespace Shared.Test;
 
-public class MockDataAccess : IDataAccess
+public class MockDataAccess : IDataService
 {
     private readonly IEmployeeFactory _employeeFactory;
     public MockDataAccess(IEmployeeFactory employeeFactory)
     {
         _employeeFactory = employeeFactory;
-    }
-    public int DeleteEmployeeRecord(int databaseId)
-    {
-        return new Random().Next(0, 33);
     }
 
     public IQueryable<Employee>? GetAllActiveEmployees()
@@ -95,7 +91,7 @@ public class MockDataAccess : IDataAccess
             var randomHighYear = new Random().Next(hireDate.Year + 1, hireDate.Year + 10);
             var randomLowYear = 0;
 
-            if (hireDate.Year > (DateTime.MinValue.Year + 10))
+            if (hireDate.Year > DateTime.MinValue.Year + 10)
                 randomLowYear = hireDate.Year - new Random().Next(1, 10);
             else
                 randomLowYear = DateTime.MinValue.Year;
@@ -121,11 +117,11 @@ public class MockDataAccess : IDataAccess
         for (int i = 0; i < new Random().Next(50, 100); i++)
         {
             var employee = _employeeFactory.CreateGenericEmployee();
-            
-            if(firstName is not null)
-                employee.FirstName = (firstName += employee.FirstName);
-            if(lastName is not null)
-                employee.LastName = (firstName += employee.LastName);
+
+            if (firstName is not null)
+                employee.FirstName = firstName += employee.FirstName;
+            if (lastName is not null)
+                employee.LastName = firstName += employee.LastName;
 
             result.Add(employee);
         }
@@ -171,6 +167,11 @@ public class MockDataAccess : IDataAccess
     }
 
     public int UpdateEmployee(Employee employee)
+    {
+        return new Random().Next(50, 100);
+    }
+
+    public int DeleteEmployeeRecord(int databaseId)
     {
         return new Random().Next(50, 100);
     }

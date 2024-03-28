@@ -1,4 +1,5 @@
-﻿using Shared.Models;
+﻿using Shared.Interfaces;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,10 @@ using System.Threading.Tasks;
 namespace DesktopApp.API;
 internal class ApiService : IApiService
 {
+    public bool ConnectionTest()
+    {
+        throw new NotImplementedException();
+    }
     public IQueryable<Employee> GetAllEmployees()
     {
         throw new NotImplementedException();
@@ -33,22 +38,22 @@ internal class ApiService : IApiService
         throw new NotImplementedException();
     }
 
-    public IQueryable<Employee> GetAllEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
+    public IQueryable<Employee> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<Employee> GetAllEmployeesByHireDate(int age, bool greaterThan, bool lessThan, bool equalTo)
+    public IQueryable<Employee> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<Employee> GetAllEmployeesByname(string firstName, string lastName)
+    public IQueryable<Employee> GetEmployeesByName(string firstName, string lastName)
     {
         throw new NotImplementedException();
     }
 
-    public IQueryable<Employee> GetAllEmployeesBy(int age, bool greaterThan, bool lessThan, bool equalTo)
+    public IQueryable<Employee> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
     {
         throw new NotImplementedException();
     }
@@ -67,7 +72,7 @@ internal class ApiService : IApiService
     {
         throw new NotImplementedException();
     }
-    public bool ConnectionTest()
+    public int DeleteEmployeeRecord(int databaseId)
     {
         throw new NotImplementedException();
     }

@@ -1,12 +1,13 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Shared.Enums;
+using Shared.Interfaces;
 using Shared.Models;
 using System.Data;
 
 namespace API.Data;
 
-public class DataAccess : IDataAccess
+public class DataAccess : IDataService
 {
     private readonly IConfiguration _config;
 
@@ -14,7 +15,7 @@ public class DataAccess : IDataAccess
     public IQueryable<Employee>? GetAllActiveEmployees()
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var result = connection.Query<Employee>("SpGetAllActiveEmployees", true, null, commandType: CommandType.StoredProcedure).AsQueryable();
+       var result = connection.Query<Employee>("SpGetAllActiveEmployees", true, null, commandType: CommandType.StoredProcedure).AsQueryable();
         return result;
     }
     public IQueryable<Employee>? GetAllEmployees()
@@ -90,4 +91,5 @@ public class DataAccess : IDataAccess
         var result = connection.Execute("SpDeleteEmployeeRecord", databaseId, null, commandType: CommandType.StoredProcedure);
         return result;
     }
+
 }

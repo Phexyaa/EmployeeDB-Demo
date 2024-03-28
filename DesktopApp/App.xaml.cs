@@ -1,13 +1,14 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
-using DesktopApp.Mock;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Shared.Enums;
 using Shared.Global;
+using Shared.Test;
+using Shared.Interfaces;
 using Shared.Utility;
 
 namespace DesktopApp;

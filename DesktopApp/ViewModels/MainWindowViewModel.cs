@@ -9,6 +9,7 @@ using Shared.Enums;
 using Microsoft.Extensions.Options;
 using Shared.Global;
 using Microsoft.Extensions.FileProviders;
+using Shared.Interfaces;
 
 namespace DesktopApp
 {
@@ -48,8 +49,8 @@ namespace DesktopApp
 
         public ICommand SearchCommand { get; }
 
-        private List<Person>? _employees;
-        public List<Person>? Employees
+        private IQueryable<Employee>? _employees;
+        public IQueryable<Employee>? Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);
@@ -76,15 +77,18 @@ namespace DesktopApp
         {
             var criteria = _defaults!.SearchCriteriaToString;
             if (!string.IsNullOrWhiteSpace(keyword))
-                Employees = _apiService!.GetEmployees()
-                    .Where(e =>
-                        (e.FirstName != null && e.FirstName.Contains(keyword))
-                        || (e.LastName != null && e.LastName.Contains(keyword))).ToList();
+            {
+                var employees = _apiService!.GetAllEmployees();
+                if (employees is not null)
+                    Employees = employees.Where(e =>
+                    (e.FirstName != null && e.FirstName.Contains(keyword))
+                    || (e.LastName != null && e.LastName.Contains(keyword)));
+            }
             else
-                Employees = _apiService!.GetEmployees();
+                Employees = _apiService!.GetAllEmployees();
         }
 
-        private bool CheckConnection() => _apiService!.GetConnectionStatus();
+        private bool CheckConnection() => _apiService!.ConnectionTest();
 
         private void UpdateConnectionStatusIcon(object? state)
         {

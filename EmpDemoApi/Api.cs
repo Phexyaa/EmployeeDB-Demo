@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Shared.Interfaces;
 using Shared.Models;
 
 namespace EmpDemoApi;
@@ -29,29 +30,29 @@ public static class Api
     {
         return true;
     }
-    private static IQueryable<Employee>? GetAllActiveEmployees([FromServices] IDataAccess data)
+    private static IQueryable<Employee>? GetAllActiveEmployees([FromServices] IDataService data)
     {
         return data.GetAllActiveEmployees();
     }
-    private static IQueryable<Employee>? GetAllEmployees([FromServices] IDataAccess data)
+    private static IQueryable<Employee>? GetAllEmployees([FromServices] IDataService data)
     {
         return data.GetAllEmployees();
     }
-    private static IQueryable<Employee>? GetAllInactiveEmployees([FromServices] IDataAccess data)
+    private static IQueryable<Employee>? GetAllInactiveEmployees([FromServices] IDataService data)
     {
         return data.GetAllInactiveEmployees();
     }
-    private static Employee? GetEmployeeByDatabaseId([FromServices] IDataAccess data,
+    private static Employee? GetEmployeeByDatabaseId([FromServices] IDataService data,
                                                                  [FromRoute] int databaseId)
     {
         return data.GetEmployeeByDatabaseId(databaseId);
     }
-    private static Employee? GetEmployeeByEmployeeId([FromServices] IDataAccess data,
+    private static Employee? GetEmployeeByEmployeeId([FromServices] IDataService data,
                                                                  [FromRoute] Guid employeeId)
     {
         return data.GetEmployeeByEmployeeId(employeeId);
     }
-    private static IQueryable<Employee>? GetEmployeesByAge([FromServices] IDataAccess data,
+    private static IQueryable<Employee>? GetEmployeesByAge([FromServices] IDataService data,
                                                            [FromRoute] int age,
                                                            [FromRoute] bool greaterThan,
                                                            [FromRoute] bool lessThan,
@@ -59,7 +60,7 @@ public static class Api
     {
         return data.GetEmployeesByAge(age, greaterThan, lessThan, equalTo);
     }
-    private static IQueryable<Employee>? GetEmployeesByHireDate([FromServices] IDataAccess data,
+    private static IQueryable<Employee>? GetEmployeesByHireDate([FromServices] IDataService data,
                                                                 [FromRoute] DateTime hireDate,
                                                                 [FromRoute] bool greaterThan,
                                                                 [FromRoute] bool lessThan,
@@ -67,14 +68,14 @@ public static class Api
     {
         return data.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo);
     }
-    private static IQueryable<Employee>? GetEmployeesByName([FromServices] IDataAccess data,
+    private static IQueryable<Employee>? GetEmployeesByName([FromServices] IDataService data,
                                                             [FromRoute] string firstName,
                                                             [FromRoute] string lastName)
     {
         return data.GetEmployeesByName(firstName, lastName);
 
     }
-    private static IQueryable<Employee>? GetEmployeesBySalary([FromServices] IDataAccess data,
+    private static IQueryable<Employee>? GetEmployeesBySalary([FromServices] IDataService data,
                                                               [FromRoute] decimal salary,
                                                               [FromRoute] bool greaterThan,
                                                               [FromRoute] bool lessThan,
@@ -83,16 +84,16 @@ public static class Api
         return data.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo);
     }
     private static IQueryable<Employee>? GetEmployeesByTitle([FromKeyedServices("D" +
-        "ataAccess")] IDataAccess data, [FromRoute] string title)
+        "ataAccess")] IDataService data, [FromRoute] string title)
     {
         return data.GetEmployeesByTitle(title);
     }
-    private static int InsertEmployee([FromServices] IDataAccess data,
+    private static int InsertEmployee([FromServices] IDataService data,
                                       [FromBody] Employee employee)
     {
         return data.InsertEmployee(employee);
     }
-    private static int UpdateEmployee([FromServices] IDataAccess data,
+    private static int UpdateEmployee([FromServices] IDataService data,
                                       [FromBody] Employee employee)
     {
         return data.UpdateEmployee(employee);
