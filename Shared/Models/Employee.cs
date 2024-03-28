@@ -1,4 +1,6 @@
-﻿namespace Shared.Models
+﻿using System.Security.Cryptography;
+
+namespace Shared.Models
 {
     public class Employee : Person
     {
@@ -22,12 +24,17 @@
             get => _hireDate;
             set => SetProperty(ref _hireDate, value);
         }
-        private Guid _employeeId;
+        private Guid _employeeId = Guid.NewGuid();
         public Guid EmployeeId
         {
-            get => _employeeId; 
+            get => _employeeId;
             set => SetProperty(ref _employeeId, value);
         }
-
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set => SetProperty(ref _isActive, value);
+        }
     }
 }
