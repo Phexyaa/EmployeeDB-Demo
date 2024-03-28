@@ -11,7 +11,7 @@ namespace Shared.Test
         {
             _dataAccess = new MockDataAccess(employeeFactory);
         }
-        public bool ConnectionTest()
+        public async Task<bool> ConnectionTest()
         {
             var coinFlip = new Random().Next(0, 2);
             switch (coinFlip)
@@ -26,69 +26,69 @@ namespace Shared.Test
 
         }
 
-        public Employee? GetEmployeeByEmployeeId(Guid employeeId)
+        public async Task<Employee> GetEmployeeByEmployeeId(Guid employeeId)
         {
-            return _dataAccess.GetEmployeeByEmployeeId(employeeId);
+            return await _dataAccess.GetEmployeeByEmployeeId(employeeId);
         }
 
-        public Employee? GetEmployeeByDatabaseId(int databaseId)
+        public async Task<Employee> GetEmployeeByDatabaseId(int databaseId)
         {
-            return _dataAccess.GetEmployeeByDatabaseId(databaseId);
+            return await _dataAccess.GetEmployeeByDatabaseId(databaseId);
         }
 
-        public IQueryable<Employee>? GetAllEmployees()
+        public async Task<IQueryable<Employee>>? GetAllEmployees()
         {
-            return _dataAccess.GetAllEmployees();
+            return await _dataAccess.GetAllEmployees();
         }
 
-        public IQueryable<Employee>? GetAllActiveEmployees()
+        public async Task<IQueryable<Employee>>? GetAllActiveEmployees()
         {
-            return _dataAccess.GetAllActiveEmployees();
+            return await _dataAccess.GetAllActiveEmployees();
         }
 
-        public IQueryable<Employee>? GetAllInactiveEmployees()
+        public async Task<IQueryable<Employee>>? GetAllInactiveEmployees()
         {
-            return _dataAccess.GetAllInactiveEmployees();
+            return await _dataAccess.GetAllInactiveEmployees();
         }
 
-        public IQueryable<Employee>? GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<IQueryable<Employee>>? GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
         {
-            return _dataAccess.GetEmployeesByAge( age, greaterThan, lessThan, equalTo);
+            return await _dataAccess.GetEmployeesByAge(age, greaterThan, lessThan, equalTo);
         }
 
-        public IQueryable<Employee>? GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<IQueryable<Employee>>? GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
         {
-            return _dataAccess.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo);
+            return await _dataAccess.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo);
         }
 
-        public IQueryable<Employee>? GetEmployeesByName(string firstName, string lastName)
+        public async Task<IQueryable<Employee>>? GetEmployeesByName(string firstName, string lastName)
         {
-            return _dataAccess.GetEmployeesByName(firstName, lastName);
+            return await _dataAccess.GetEmployeesByName(firstName, lastName);
         }
 
-        public IQueryable<Employee>? GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<IQueryable<Employee>>? GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
         {
-            return _dataAccess.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo);
+            return await _dataAccess.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo);
         }
 
-        public IQueryable<Employee>? GetEmployeesByTitle(string title)
+        public async Task<IQueryable<Employee>>? GetEmployeesByTitle(string title)
         {
-            return _dataAccess.GetEmployeesByTitle(title);
+            return await _dataAccess.GetEmployeesByTitle(title);
         }
 
-        public int DeleteEmployeeRecord(int databaseId)
+        public async Task<int> DeleteEmployeeRecord(int databaseId)
         {
-            return _dataAccess.DeleteEmployeeRecord(databaseId);
+            return await _dataAccess.DeleteEmployeeRecord(databaseId);
         }
 
-        public int InsertEmployee(Employee employee)
+        public async Task<int> InsertEmployee(Employee employee)
         {
-            return _dataAccess.InsertEmployee(employee);
+            return await _dataAccess.InsertEmployee(employee);
         }
 
-        public int UpdateEmployee(Employee employee)
+        public async Task<int> UpdateEmployee(Employee employee)
         {
-            return _dataAccess.UpdateEmployee(employee);
+            return await _dataAccess.UpdateEmployee(employee);
         }
     }
 }

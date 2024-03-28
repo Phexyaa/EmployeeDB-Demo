@@ -49,8 +49,8 @@ namespace DesktopApp
 
         public ICommand SearchCommand { get; }
 
-        private IQueryable<Employee>? _employees;
-        public IQueryable<Employee>? Employees
+        private IQueryable<Employee?> _employees;
+        public IQueryable<Employee?> Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);
@@ -67,32 +67,32 @@ namespace DesktopApp
             if (_apiService == null)
                 throw new NullReferenceException(nameof(_apiService));
 
-            SearchCommand = new RelayCommand<string>(Search);
+            SearchCommand = new AsyncRelayCommand<string>(Search);
 
             _connectionTestTimer = new Timer(UpdateConnectionStatusIcon, null, 0, 10000);
 
         }
 
-        public void Search(string? keyword)
+        public async Task Search(string? keyword)
         {
             var criteria = _defaults!.SearchCriteriaToString;
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                var employees = _apiService!.GetAllEmployees();
+                var employees = await _apiService!.GetAllEmployees();
                 if (employees is not null)
                     Employees = employees.Where(e =>
                     (e.FirstName != null && e.FirstName.Contains(keyword))
                     || (e.LastName != null && e.LastName.Contains(keyword)));
             }
             else
-                Employees = _apiService!.GetAllEmployees();
+                Employees = await _apiService!.GetAllEmployees();
         }
 
-        private bool CheckConnection() => _apiService!.ConnectionTest();
+        private async Task<bool> CheckConnection() => await _apiService!.ConnectionTest();
 
-        private void UpdateConnectionStatusIcon(object? state)
+        private async void UpdateConnectionStatusIcon(object? state)
         {
-            if (CheckConnection())
+            if (await CheckConnection())
             {
                 ConnectionStatusIcon = connectionOkIcon;
                 ConnectionStatusBackground = connectionStatusOkBackground;

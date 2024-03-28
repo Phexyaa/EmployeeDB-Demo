@@ -10,6 +10,7 @@ public static class Api
 {
     public static void ConfigureAPI(this WebApplication app)
     {
+        app.MapGet("/ConnectionTest", ConnectionTest).WithName("ConnectionTest").WithOpenApi();
         app.MapGet("/GetAllEmployees", GetAllEmployees).WithName("GetAllEmployees").WithOpenApi();
         app.MapGet("/GetAllActiveEmployees{isActive}", GetAllActiveEmployees).WithName("GetAllActiveEmployees").WithOpenApi();
         app.MapGet("/GetAllInactiveEmployees{isActive}", GetAllInactiveEmployees).WithName("GetAllInactiveEmployees").WithOpenApi();
@@ -20,82 +21,83 @@ public static class Api
         app.MapGet("/GetEmployeesByName{firstName}/{lastName}", GetEmployeesByName).WithName("GetEmployeesByName").WithOpenApi();
         app.MapGet("/GetEmployeesBySalary{salary}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesBySalary).WithName("GetEmployeesBySalary").WithOpenApi();
         app.MapGet("/GetEmployeesByTitle{title}", GetEmployeesByTitle).WithName("GetEmployeesByTitle").WithOpenApi();
+
         app.MapPut("/InsertEmployee", InsertEmployee).WithName("InsertEmployee").WithOpenApi();
+
         app.MapPost("/UpdateEmployee", UpdateEmployee).WithName("UpdateEmployee").WithOpenApi();
 
-        app.MapGet("/GetStatus", ConnectionTest).WithName("ConnectionTest").WithOpenApi();
     }
 
     private static bool ConnectionTest()
     {
         return true;
     }
-    private static IQueryable<Employee>? GetAllActiveEmployees([FromServices] IDataService data)
-    {
-        return data.GetAllActiveEmployees();
-    }
-    private static IQueryable<Employee>? GetAllEmployees([FromServices] IDataService data)
-    {
-        return data.GetAllEmployees();
-    }
-    private static IQueryable<Employee>? GetAllInactiveEmployees([FromServices] IDataService data)
-    {
-        return data.GetAllInactiveEmployees();
-    }
-    private static Employee? GetEmployeeByDatabaseId([FromServices] IDataService data,
+    private static async Task<Employee?> GetEmployeeByDatabaseId([FromServices] IDataService data,
                                                                  [FromRoute] int databaseId)
     {
-        return data.GetEmployeeByDatabaseId(databaseId);
+        return await data.GetEmployeeByDatabaseId(databaseId);
     }
-    private static Employee? GetEmployeeByEmployeeId([FromServices] IDataService data,
+    private static async Task<Employee?> GetEmployeeByEmployeeId([FromServices] IDataService data,
                                                                  [FromRoute] Guid employeeId)
     {
-        return data.GetEmployeeByEmployeeId(employeeId);
+        return await data.GetEmployeeByEmployeeId(employeeId);
     }
-    private static IQueryable<Employee>? GetEmployeesByAge([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee>>? GetAllActiveEmployees([FromServices] IDataService data)
+    {
+        return await data.GetAllActiveEmployees()!;
+    }
+    private static async Task<IQueryable<Employee?>> GetAllEmployees([FromServices] IDataService data)
+    {
+        return await data.GetAllEmployees();
+    }
+    private static async Task<IQueryable<Employee>>? GetAllInactiveEmployees([FromServices] IDataService data)
+    {
+        return await data.GetAllInactiveEmployees()!;
+    }
+    private static async Task<IQueryable<Employee>>? GetEmployeesByAge([FromServices] IDataService data,
                                                            [FromRoute] int age,
                                                            [FromRoute] bool greaterThan,
                                                            [FromRoute] bool lessThan,
                                                            [FromRoute] bool equalTo)
     {
-        return data.GetEmployeesByAge(age, greaterThan, lessThan, equalTo);
+        return await data.GetEmployeesByAge(age, greaterThan, lessThan, equalTo)!;
     }
-    private static IQueryable<Employee>? GetEmployeesByHireDate([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee>>? GetEmployeesByHireDate([FromServices] IDataService data,
                                                                 [FromRoute] DateTime hireDate,
                                                                 [FromRoute] bool greaterThan,
                                                                 [FromRoute] bool lessThan,
                                                                 [FromRoute] bool equalTo)
     {
-        return data.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo);
+        return await data.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo)!;
     }
-    private static IQueryable<Employee>? GetEmployeesByName([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee>>? GetEmployeesByName([FromServices] IDataService data,
                                                             [FromRoute] string firstName,
                                                             [FromRoute] string lastName)
     {
-        return data.GetEmployeesByName(firstName, lastName);
+        return await data.GetEmployeesByName(firstName, lastName)!;
 
     }
-    private static IQueryable<Employee>? GetEmployeesBySalary([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee>>? GetEmployeesBySalary([FromServices] IDataService data,
                                                               [FromRoute] decimal salary,
                                                               [FromRoute] bool greaterThan,
                                                               [FromRoute] bool lessThan,
                                                               [FromRoute] bool equalTo)
     {
-        return data.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo);
+        return await data.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo)!;
     }
-    private static IQueryable<Employee>? GetEmployeesByTitle([FromKeyedServices("D" +
+    private static async Task<IQueryable<Employee>>? GetEmployeesByTitle([FromKeyedServices("D" +
         "ataAccess")] IDataService data, [FromRoute] string title)
     {
-        return data.GetEmployeesByTitle(title);
+        return await data.GetEmployeesByTitle(title)!;
     }
-    private static int InsertEmployee([FromServices] IDataService data,
+    private static async Task<int>? InsertEmployee([FromServices] IDataService data,
                                       [FromBody] Employee employee)
     {
-        return data.InsertEmployee(employee);
+        return await data.InsertEmployee(employee);
     }
-    private static int UpdateEmployee([FromServices] IDataService data,
+    private static async Task<int>? UpdateEmployee([FromServices] IDataService data,
                                       [FromBody] Employee employee)
     {
-        return data.UpdateEmployee(employee);
+        return await data.UpdateEmployee(employee);
     }
 }

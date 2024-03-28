@@ -13,7 +13,21 @@ public class MockDataAccess : IDataService
         _employeeFactory = employeeFactory;
     }
 
-    public IQueryable<Employee>? GetAllActiveEmployees()
+
+    public Task<Employee>? GetEmployeeByDatabaseId(int databaseId)
+    {
+        var employee = _employeeFactory.CreateGenericEmployee();
+        employee.Id = databaseId;
+        return Task.Run(()=> employee);
+    }
+
+    public Task<Employee> GetEmployeeByEmployeeId(Guid id)
+    {
+        var employee = _employeeFactory.CreateGenericEmployee();
+        employee.EmployeeId = id;
+        return Task.Run(() => employee);
+    }
+    public Task<IQueryable<Employee>>? GetAllActiveEmployees()
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -22,20 +36,20 @@ public class MockDataAccess : IDataService
             employee.IsActive = true;
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public IQueryable<Employee>? GetAllEmployees()
+    public Task<IQueryable<Employee>>? GetAllEmployees()
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
         {
             result.Add(_employeeFactory.CreateGenericEmployee());
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public IQueryable<Employee>? GetAllInactiveEmployees()
+    public Task<IQueryable<Employee>>? GetAllInactiveEmployees()
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -44,24 +58,10 @@ public class MockDataAccess : IDataService
             employee.IsActive = false;
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public Employee? GetEmployeeByDatabaseId(int databaseId)
-    {
-        var employee = _employeeFactory.CreateGenericEmployee();
-        employee.Id = databaseId;
-        return employee;
-    }
-
-    public Employee GetEmployeeByEmployeeId(Guid id)
-    {
-        var employee = _employeeFactory.CreateGenericEmployee();
-        employee.EmployeeId = id;
-        return employee;
-    }
-
-    public IQueryable<Employee>? GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<IQueryable<Employee>>? GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -79,10 +79,10 @@ public class MockDataAccess : IDataService
 
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public IQueryable<Employee>? GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<IQueryable<Employee>>? GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -108,10 +108,10 @@ public class MockDataAccess : IDataService
 
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public IQueryable<Employee>? GetEmployeesByName(string? firstName = null, string? lastName = null)
+    public Task<IQueryable<Employee>>? GetEmployeesByName(string? firstName = null, string? lastName = null)
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -125,10 +125,10 @@ public class MockDataAccess : IDataService
 
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public IQueryable<Employee>? GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<IQueryable<Employee>>? GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -146,10 +146,10 @@ public class MockDataAccess : IDataService
 
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public IQueryable<Employee>? GetEmployeesByTitle(string title)
+    public Task<IQueryable<Employee>>? GetEmployeesByTitle(string title)
     {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
@@ -158,21 +158,28 @@ public class MockDataAccess : IDataService
             employee.Title = title;
             result.Add(employee);
         }
-        return result.AsQueryable();
+
+        return Task.Run(() => result.AsQueryable());
     }
 
-    public int InsertEmployee(Employee employee)
+    public Task<int> InsertEmployee(Employee employee)
     {
-        return new Random().Next(50, 100);
+        return Task.Run(() => {
+            return new Random().Next(50, 100);
+        });
     }
 
-    public int UpdateEmployee(Employee employee)
+    public Task<int> UpdateEmployee(Employee employee)
     {
-        return new Random().Next(50, 100);
+        return Task.Run(() => {
+            return new Random().Next(50, 100);
+        });
     }
 
-    public int DeleteEmployeeRecord(int databaseId)
+    public Task<int> DeleteEmployeeRecord(int databaseId)
     {
-        return new Random().Next(50, 100);
+        return Task.Run(() => {
+            return new Random().Next(50, 100);
+        });
     }
 }

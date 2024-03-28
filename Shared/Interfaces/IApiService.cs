@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace Shared.Interfaces;
 public interface IApiService : IDataService
 {
-    public bool ConnectionTest();
+    public Task<bool> ConnectionTest();
 
 }
