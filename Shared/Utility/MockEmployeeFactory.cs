@@ -168,7 +168,7 @@ public class MockEmployeeFactory : IEmployeeFactory
 
     public Employee CreateGenericEmployee()
     {
-        return CreateEmployee("", "", 0, "", new DateTime(), 0);
+        return CreateEmployee();
     }
     public Employee CreateEmployee(string firstName = "", string lastName = "", int salary = 0, string title = "",
                                  DateTime hireDate = new DateTime(), int age = 0)
