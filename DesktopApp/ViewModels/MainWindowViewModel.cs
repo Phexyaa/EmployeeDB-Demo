@@ -6,6 +6,8 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Shared.Enums;
+using DesktopApp.Services;
+using Microsoft.Extensions.Options;
 
 namespace DesktopApp
 {
@@ -13,16 +15,17 @@ namespace DesktopApp
     {
         private readonly IApiService? _apiService;
         private readonly Timer _connectionTestTimer;
-
+        private readonly Settings? _settings;
+        public Settings Settings { get => _settings; }
         public string Title { get; set; } = "Employee Lookup Demo";
         public string CriteriaLabelText { get; set; } = "Search by:";
 
-        public SearchCriteria _selectedSearchCriteria = SearchCriteria.LastName;
-        public SearchCriteria SelectedSearchCriteria
-        {
-            get => _selectedSearchCriteria;
-            set => SetProperty(ref _selectedSearchCriteria, value);
-        }
+        //public SearchCriteria _selectedSearchCriteria = SearchCriteria.LastName;
+        //public SearchCriteria SelectedSearchCriteria
+        //{
+        //    get => _selectedSearchCriteria;
+        //    set => SetProperty(ref _selectedSearchCriteria, value);
+        //}
 
         private ImageSource connectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
         private ImageSource connectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
@@ -52,6 +55,10 @@ namespace DesktopApp
         }
         public MainWindowViewModel()
         {
+            _settings = App.Current.Services.GetService<IOptionsMonitor<Settings>>().CurrentValue;
+            if (_settings is null)
+                throw new NullReferenceException(nameof(_settings));
+
             _apiService = App.Current.Services.GetService<IApiService>();
             if (_apiService == null)
                 throw new NullReferenceException(nameof(_apiService));
@@ -64,7 +71,7 @@ namespace DesktopApp
 
         public void Search(string? keyword)
         {
-            var criteria = SelectedSearchCriteria;
+            var criteria = _settings!.SearchCriteriaToString; //SelectedSearchCriteria;
             if (!string.IsNullOrWhiteSpace(keyword))
                 Employees = _apiService!.GetEmployees()
                     .Where(e =>
