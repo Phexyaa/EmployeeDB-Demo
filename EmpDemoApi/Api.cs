@@ -11,7 +11,7 @@ public static class Api
     {
         app.MapGet("/GetAllEmployees", GetAllEmployees).WithName("GetAllEmployees").WithOpenApi();
         app.MapGet("/GetAllActiveEmployees{isActive}", GetAllActiveEmployees).WithName("GetAllActiveEmployees").WithOpenApi();
-        app.MapGet("/GetAllInActiveEmployees{isActive}", GetAllInactiveEmployees).WithName("GetAllInActiveEmployees").WithOpenApi();
+        app.MapGet("/GetAllInactiveEmployees{isActive}", GetAllInactiveEmployees).WithName("GetAllInactiveEmployees").WithOpenApi();
         app.MapGet("/GetEmployeeByEmployeeId{employeeId}", GetEmployeeByEmployeeId).WithName("GetEmployeeByEmployeeId").WithOpenApi();
         app.MapGet("/GetEmployeeByDatabaseId{databaseId}", GetEmployeeByDatabaseId).WithName("GetEmployeeByDatabaseId").WithOpenApi();
         app.MapGet("/GetEmployeesByAge{age}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByAge).WithName("GetEmployeesByAge").WithOpenApi();
