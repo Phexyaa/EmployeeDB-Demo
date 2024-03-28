@@ -49,8 +49,8 @@ namespace DesktopApp
 
         public ICommand SearchCommand { get; }
 
-        private IQueryable<Employee?> _employees;
-        public IQueryable<Employee?> Employees
+        private IQueryable<Employee?>? _employees;
+        public IQueryable<Employee?>? Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);
