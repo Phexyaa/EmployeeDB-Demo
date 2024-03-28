@@ -1,4 +1,5 @@
 using API.Data;
+using API.Testing;
 using EmpDemoApi;
 using Shared.Global;
 using Shared.Utility;
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IDataAccess, DataAccess>();
+builder.Services.AddSingleton<IDataAccess, MockDataAccess>(); //Mocking data service for now
 builder.Services.AddTransient<IEmployeeFactory, MockEmployeeFactory>(); //Mocking employee for now
 builder.Services.AddTransient<Defaults>();
 
