@@ -10,6 +10,8 @@ using Shared.Global;
 using Shared.Test;
 using Shared.Interfaces;
 using Shared.Utility;
+using System.Diagnostics.Eventing.Reader;
+using DesktopApp.API;
 
 namespace DesktopApp;
 /// <summary>
@@ -22,6 +24,7 @@ public partial class App : Application
     private static HostApplicationBuilder builder = Host.CreateApplicationBuilder();
     private static IConfiguration _config => new ConfigurationBuilder()
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
         .Build();
 
     public App()
@@ -33,11 +36,12 @@ public partial class App : Application
     {
         var services = new ServiceCollection();
 
-        services.AddSingleton<IApiService, MockApi>();
+        services.AddSingleton<IApiService, ApiService>();
         services.AddSingleton<HttpClient>();
         services.AddSingleton(_config);
         services.AddTransient<IEmployeeFactory, MockEmployeeFactory>();
         services.AddOptions<Defaults>().Bind(_config.GetRequiredSection("Defaults"));
+        services.AddOptions<ApiOptions>().Bind(_config.GetRequiredSection("Api"));
 
         return services.BuildServiceProvider();
     }
