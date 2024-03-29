@@ -22,12 +22,12 @@ namespace DesktopApp
         public string Title { get; set; } = "Employee Lookup Demo";
         public string CriteriaLabelText { get; set; } = "Search by:";
 
-        //public SearchCriteria _selectedSearchCriteria = SearchCriteria.LastName;
-        //public SearchCriteria SelectedSearchCriteria
-        //{
-        //    get => _selectedSearchCriteria;
-        //    set => SetProperty(ref _selectedSearchCriteria, value);
-        //}
+        public SearchCriteria _selectedSearchCriteria = SearchCriteria.LastName;
+        public SearchCriteria SelectedSearchCriteria
+        {
+            get => _selectedSearchCriteria;
+            set => SetProperty(ref _selectedSearchCriteria, value);
+        }
 
         private ImageSource connectionOkIcon = new BitmapImage(new Uri(@"/Assets/database-check.png", UriKind.Relative));
         private ImageSource connectionFailedIcon = new BitmapImage(new Uri(@"/Assets/database-slash.png", UriKind.Relative));
@@ -78,11 +78,47 @@ namespace DesktopApp
             var criteria = _defaults!.SearchCriteriaToString;
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                var employees = await _apiService!.GetAllEmployees();
-                if (employees is not null)
-                    Employees = employees.Where(e =>
-                    (e.FirstName != null && e.FirstName.Contains(keyword))
-                    || (e.LastName != null && e.LastName.Contains(keyword)));
+                switch (SelectedSearchCriteria)
+                {
+                    case SearchCriteria.FirstName:
+                        Employees = await _apiService!.GetEmployeesByFirstName(keyword);
+                        break;
+                    case SearchCriteria.LastName:
+                        Employees = await _apiService!.GetEmployeesByLastName(keyword);
+                        break;
+                    case SearchCriteria.HireDate:
+                        DateTime.TryParse(keyword, out var hireDate);
+                        Employees = await _apiService!.GetEmployeesByHireDate(hireDate, false, false, true);
+                        break;
+                    case SearchCriteria.Age:
+                        int.TryParse(keyword, out int age);
+                        Employees = await _apiService!.GetEmployeesByAge(age, false, false, true);
+                        break;
+                    case SearchCriteria.Title:
+                        Employees = await _apiService!.GetEmployeesByTitle(keyword);
+                        break;
+                    case SearchCriteria.Salary:
+                        decimal.TryParse(keyword, out decimal salary);
+                        Employees = await _apiService!.GetEmployeesBySalary(salary, false, false, true);
+                        break;
+                    case SearchCriteria.IsActive:
+                        bool.TryParse(keyword, out bool active);
+                        if (active)
+                            Employees = await _apiService!.GetAllActiveEmployees();
+                        else
+                            Employees = await _apiService!.GetAllInactiveEmployees();
+                        break;
+                    case SearchCriteria.EmployeeId:
+                        Guid.TryParse(keyword, out Guid id);
+                        var employee = await _apiService!.GetEmployeeByEmployeeId(id);
+                        var list = new List<Employee?>();
+                        list.Add(employee);
+                        Employees = list.AsQueryable();
+
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(SelectedSearchCriteria));
+                }
             }
             else
                 Employees = await _apiService!.GetAllEmployees();
