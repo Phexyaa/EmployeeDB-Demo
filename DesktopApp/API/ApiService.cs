@@ -74,7 +74,7 @@ internal class ApiService : IApiService
         else
             return new Employee();
     }
-    public async Task<IQueryable<Employee?>> GetAllEmployees()
+    public async Task<List<Employee?>> GetAllEmployees()
     {
         var response = await _client.GetAsync("GetAllEmployees");
         if (response.IsSuccessStatusCode)
@@ -82,15 +82,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetAllActiveEmployees()
+    public async Task<List<Employee?>> GetAllActiveEmployees()
     {
         var response = await _client.GetAsync("GetAllActiveEmployees");
         if (response.IsSuccessStatusCode)
@@ -98,15 +98,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetAllInactiveEmployees()
+    public async Task<List<Employee?>> GetAllInactiveEmployees()
     {
         var response = await _client.GetAsync("GetAllInactiveEmployees");
         if (response.IsSuccessStatusCode)
@@ -114,15 +114,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<List<Employee?>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
     {
         var response = await _client.GetAsync("GetEmployeesByAge");
         if (response.IsSuccessStatusCode)
@@ -130,15 +130,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<List<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
     {
         var response = await _client.GetAsync("GetEmployeesByHireDate");
         if (response.IsSuccessStatusCode)
@@ -146,15 +146,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetEmployeesByFirstName(string firstName)
+    public async Task<List<Employee?>> GetEmployeesByFirstName(string firstName)
     {
         var response = await _client.GetAsync($"GetEmployeesByFirstName/{firstName}");
         if (response.IsSuccessStatusCode)
@@ -162,14 +162,14 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByLastName(string lastName)
+    public async Task<List<Employee?>> GetEmployeesByLastName(string lastName)
     {
         var response = await _client.GetAsync($"GetEmployeesByLastName/{lastName}");
         if (response.IsSuccessStatusCode)
@@ -177,15 +177,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<List<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
     {
         var response = await _client.GetAsync("GetEmployeesBySalary");
         if (response.IsSuccessStatusCode)
@@ -193,15 +193,15 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
-    public async Task<IQueryable<Employee?>> GetEmployeesByTitle(string title)
+    public async Task<List<Employee?>> GetEmployeesByTitle(string title)
     {
         var response = await _client.GetAsync("GetEmployeesByTitle");
         if (response.IsSuccessStatusCode)
@@ -209,12 +209,12 @@ internal class ApiService : IApiService
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
-                return result.AsQueryable();
+                return result;
             else
-                return new List<Employee>().AsQueryable();
+                return new List<Employee>();
         }
         else
-            return new List<Employee>().AsQueryable();
+            return new List<Employee>();
     }
 
     public async Task<int> InsertEmployee(Employee employee)

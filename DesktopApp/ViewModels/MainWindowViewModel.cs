@@ -49,8 +49,8 @@ namespace DesktopApp
 
         public ICommand SearchCommand { get; }
 
-        private IQueryable<Employee?>? _employees;
-        public IQueryable<Employee?>? Employees
+        private List<Employee> _employees = new();
+        public List<Employee> Employees
         {
             get => _employees;
             set => SetProperty(ref _employees, value);
@@ -110,11 +110,8 @@ namespace DesktopApp
                         break;
                     case SearchCriteria.EmployeeId:
                         Guid.TryParse(keyword, out Guid id);
-                        var employee = await _apiService!.GetEmployeeByEmployeeId(id);
-                        var list = new List<Employee?>();
-                        list.Add(employee);
-                        Employees = list.AsQueryable();
-
+                        Employees.Clear();
+                        Employees.Add(await _apiService!.GetEmployeeByEmployeeId(id));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(SelectedSearchCriteria));

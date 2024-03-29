@@ -8,7 +8,7 @@ namespace Shared.Test;
 public class MockDataAccess : IDataService
 {
     private readonly IEmployeeFactory _employeeFactory;
-    private IQueryable<Employee> employees = new List<Employee>().AsQueryable();
+    private List<Employee> employees = new List<Employee>();
     public MockDataAccess(IEmployeeFactory employeeFactory)
     {
         _employeeFactory = employeeFactory;
@@ -28,7 +28,7 @@ public class MockDataAccess : IDataService
         employee.EmployeeId = id;
         return Task.Run(() => employee);
     }
-    private IQueryable<Employee> GenerateEmployees() {
+    private List<Employee> GenerateEmployees() {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
         {
@@ -36,17 +36,17 @@ public class MockDataAccess : IDataService
             employee.IsActive = true;
             result.Add(employee);
         }
-        return result.AsQueryable();
+        return result;
     }
-    public Task<IQueryable<Employee>> GetAllActiveEmployees()
+    public Task<List<Employee>> GetAllActiveEmployees()
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.IsActive == true));
+        return Task.FromResult(employees.Where(e => e.IsActive == true).ToList());
     }
 
-    public Task<IQueryable<Employee>> GetAllEmployees()
+    public Task<List<Employee>> GetAllEmployees()
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
@@ -54,31 +54,31 @@ public class MockDataAccess : IDataService
         return Task.FromResult(employees);
     }
 
-    public Task<IQueryable<Employee>> GetAllInactiveEmployees()
+    public Task<List<Employee>> GetAllInactiveEmployees()
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.IsActive == false));
+        return Task.FromResult(employees.Where(e => e.IsActive == false).ToList());
     }
 
-    public Task<IQueryable<Employee>> GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<List<Employee>> GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
         if (equalTo)
-            return Task.FromResult(employees.Where(e => e.Age == age));
+            return Task.FromResult(employees.Where(e => e.Age == age).ToList());
         else if (greaterThan && !lessThan)
-            return Task.FromResult(employees.Where(e => e.Age > age));
+            return Task.FromResult(employees.Where(e => e.Age > age).ToList());
         else if (lessThan && !greaterThan)
-            return Task.FromResult(employees.Where(e => e.Age < age));
+            return Task.FromResult(employees.Where(e => e.Age < age).ToList());
         else
             throw new ArgumentException($"Invalid Parameters; {nameof(age)} must be an int, " +
                 $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
     }
 
-    public Task<IQueryable<Employee>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<List<Employee>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
@@ -93,55 +93,55 @@ public class MockDataAccess : IDataService
             randomLowYear = DateTime.MinValue.Year;
 
         if (equalTo)
-            return Task.FromResult(employees.Where(e => e.HireDate == hireDate));
+            return Task.FromResult(employees.Where(e => e.HireDate == hireDate).ToList());
         else if (greaterThan && !lessThan)
-            return Task.FromResult(employees.Where(e => e.HireDate > hireDate));
+            return Task.FromResult(employees.Where(e => e.HireDate > hireDate).ToList());
         else if (lessThan && !greaterThan)
-            return Task.FromResult(employees.Where(e => e.HireDate < hireDate));
+            return Task.FromResult(employees.Where(e => e.HireDate < hireDate).ToList());
         else
             throw new ArgumentException($"Invalid Parameters; {nameof(hireDate)} must be in date format, " +
                 $"{nameof(greaterThan)} and {nameof(lessThan)} cannot both be set to true");
     }
 
-    public Task<IQueryable<Employee>> GetEmployeesByFirstName(string firstName)
+    public Task<List<Employee>> GetEmployeesByFirstName(string firstName)
     {
         firstName = firstName.ToLower();
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e=> e.FirstName !=null && e.FirstName.ToLower().Contains(firstName)));
+        return Task.FromResult(employees.Where(e=> e.FirstName !=null && e.FirstName.ToLower().Contains(firstName)).ToList());
     }
-    public Task<IQueryable<Employee>> GetEmployeesByLastName(string lastName)
+    public Task<List<Employee>> GetEmployeesByLastName(string lastName)
     {
         lastName = lastName.ToLower();
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.FirstName != null && e.FirstName.ToLower().Contains(lastName)));
+        return Task.FromResult(employees.Where(e => e.FirstName != null && e.FirstName.ToLower().Contains(lastName)).ToList());
     }
 
-    public Task<IQueryable<Employee>> GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<List<Employee>> GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
         if (equalTo)
-            return Task.FromResult(employees.Where(e => e.Salary == salary));
+            return Task.FromResult(employees.Where(e => e.Salary == salary).ToList());
         else if (greaterThan && !lessThan)
-            return Task.FromResult(employees.Where(e => e.Salary > salary));
+            return Task.FromResult(employees.Where(e => e.Salary > salary).ToList());
         else if (lessThan && !greaterThan)
-            return Task.FromResult(employees.Where(e => e.Salary < salary));
+            return Task.FromResult(employees.Where(e => e.Salary < salary).ToList());
         else
             throw new ArgumentException($"Invalid Parameters; {nameof(salary)} must be a number, " +
                 $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
     }
 
-    public Task<IQueryable<Employee>> GetEmployeesByTitle(string title)
+    public Task<List<Employee>> GetEmployeesByTitle(string title)
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.Title !=null && e.Title.Contains(title)));
+        return Task.FromResult(employees.Where(e => e.Title !=null && e.Title.Contains(title)).ToList());
     }
 
     public Task<int> InsertEmployee(Employee employee)

@@ -27,67 +27,67 @@ public class DataAccess : IDataService
         var result = response.FirstOrDefault();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetAllActiveEmployees()
+    public async Task<List<Employee?>> GetAllActiveEmployees()
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
        var response = await connection.QueryAsync<Employee>("SpGetAllActiveEmployees", true, null, commandType: CommandType.StoredProcedure);;
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetAllEmployees()
+    public async Task<List<Employee?>> GetAllEmployees()
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetAllEmployees", null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetAllInactiveEmployees()
+    public async Task<List<Employee?>> GetAllInactiveEmployees()
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetAllInactiveEmployees", false, null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public async Task<List<Employee?>> GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByAge", age, null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo = true)
+    public async Task<List<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo = true)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByHireDate", hireDate.ToShortDateString(), null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByFirstName(string firstName)
+    public async Task<List<Employee?>> GetEmployeesByFirstName(string firstName)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByFirstName", firstName, null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByLastName(string lastName)
+    public async Task<List<Employee?>> GetEmployeesByLastName(string lastName)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByLastName", lastName, null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo = true)
+    public async Task<List<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo = true)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesBySalary", salary, null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByTitle(string title)
+    public async Task<List<Employee?>> GetEmployeesByTitle(string title)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByTitle", title, null, commandType: CommandType.StoredProcedure);
-        var result = response.AsQueryable();
+        var result = response.ToList();
         return result;
     }
     public async Task<int> InsertEmployee(Employee employee)
