@@ -8,6 +8,7 @@ namespace Shared.Test;
 public class MockDataAccess : IDataService
 {
     private readonly IEmployeeFactory _employeeFactory;
+    private IQueryable<Employee> employees = new List<Employee>().AsQueryable();
     public MockDataAccess(IEmployeeFactory employeeFactory)
     {
         _employeeFactory = employeeFactory;
@@ -16,154 +17,131 @@ public class MockDataAccess : IDataService
 
     public Task<Employee> GetEmployeeByDatabaseId(int databaseId)
     {
-        var employee = _employeeFactory.CreateGenericEmployee();
+        var employee = _employeeFactory.CreateGenericEmployee() ?? new Employee();
         employee.Id = databaseId;
         return Task.Run(()=> employee);
     }
 
     public Task<Employee> GetEmployeeByEmployeeId(Guid id)
     {
-        var employee = _employeeFactory.CreateGenericEmployee();
+        var employee = _employeeFactory.CreateGenericEmployee() ?? new Employee();
         employee.EmployeeId = id;
         return Task.Run(() => employee);
     }
-    public Task<IQueryable<Employee?>> GetAllActiveEmployees()
-    {
-        var result = new List<Employee?>();
+    private IQueryable<Employee> GenerateEmployees() {
+        var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
         {
-            var employee = _employeeFactory.CreateGenericEmployee();
+            var employee = _employeeFactory.CreateGenericEmployee() ?? new Employee();
             employee.IsActive = true;
             result.Add(employee);
         }
-        return Task.Run(() => result.AsQueryable());
+        return result.AsQueryable();
+    }
+    public Task<IQueryable<Employee>> GetAllActiveEmployees()
+    {
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees.Where(e => e.IsActive == true));
     }
 
-    public Task<IQueryable<Employee?>> GetAllEmployees()
+    public Task<IQueryable<Employee>> GetAllEmployees()
     {
-        var result = new List<Employee?>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            result.Add(_employeeFactory.CreateGenericEmployee());
-        }
-        return Task.Run(() => result.AsQueryable());
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees);
     }
 
-    public Task<IQueryable<Employee?>> GetAllInactiveEmployees()
+    public Task<IQueryable<Employee>> GetAllInactiveEmployees()
     {
-        var result = new List<Employee?>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            employee.IsActive = false;
-            result.Add(employee);
-        }
-        return Task.Run(() => result.AsQueryable());
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees.Where(e => e.IsActive == false));
     }
 
-    public Task<IQueryable<Employee?>> GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<IQueryable<Employee>> GetEmployeesByAge(int age, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
-        var result = new List<Employee>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            if (equalTo)
-                employee.Age = age;
-            else if (greaterThan && !lessThan)
-                employee.Age = new Random().Next(age + 1, age + 15);
-            else if (lessThan && !greaterThan)
-                employee.Age = new Random().Next(age - 1, age - 15);
-            else
-                throw new ArgumentException($"Invalid Parameters; {nameof(age)} must be an int, " +
-                    $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
 
-            result.Add(employee);
-        }
-        return Task.Run(() => result.AsQueryable());
+        if (equalTo)
+            return Task.FromResult(employees.Where(e => e.Age == age));
+        else if (greaterThan && !lessThan)
+            return Task.FromResult(employees.Where(e => e.Age > age));
+        else if (lessThan && !greaterThan)
+            return Task.FromResult(employees.Where(e => e.Age < age));
+        else
+            throw new ArgumentException($"Invalid Parameters; {nameof(age)} must be an int, " +
+                $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
     }
 
-    public Task<IQueryable<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<IQueryable<Employee>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
-        var result = new List<Employee>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            var randomHighYear = new Random().Next(hireDate.Year + 1, hireDate.Year + 10);
-            var randomLowYear = 0;
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
 
-            if (hireDate.Year > DateTime.MinValue.Year + 10)
-                randomLowYear = hireDate.Year - new Random().Next(1, 10);
-            else
-                randomLowYear = DateTime.MinValue.Year;
+        var employee = _employeeFactory.CreateGenericEmployee();
+        var randomHighYear = new Random().Next(hireDate.Year + 1, hireDate.Year + 10);
+        var randomLowYear = 0;
 
-            if (equalTo)
-                employee.HireDate = hireDate;
-            else if (greaterThan && !lessThan)
-                employee.HireDate = new DateTime(randomHighYear, 1, 1);
-            else if (lessThan && !greaterThan)
-                employee.HireDate = new DateTime(randomLowYear, 1, 1);
-            else
-                throw new ArgumentException($"Invalid Parameters; {nameof(hireDate)} must be in date format, " +
-                    $"{nameof(greaterThan)} and {nameof(lessThan)} cannot both be set to true");
+        if (hireDate.Year > DateTime.MinValue.Year + 10)
+            randomLowYear = hireDate.Year - new Random().Next(1, 10);
+        else
+            randomLowYear = DateTime.MinValue.Year;
 
-            result.Add(employee);
-        }
-        return Task.Run(() => result.AsQueryable());
+        if (equalTo)
+            return Task.FromResult(employees.Where(e => e.HireDate == hireDate));
+        else if (greaterThan && !lessThan)
+            return Task.FromResult(employees.Where(e => e.HireDate > hireDate));
+        else if (lessThan && !greaterThan)
+            return Task.FromResult(employees.Where(e => e.HireDate < hireDate));
+        else
+            throw new ArgumentException($"Invalid Parameters; {nameof(hireDate)} must be in date format, " +
+                $"{nameof(greaterThan)} and {nameof(lessThan)} cannot both be set to true");
     }
 
-    public Task<IQueryable<Employee?>> GetEmployeesByFirstName(string firstName)
+    public Task<IQueryable<Employee>> GetEmployeesByFirstName(string firstName)
     {
-        var result = new List<Employee?>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            result.Add(employee);
-        }
-        return Task.Run(() => result.AsQueryable().Where(e=> e.FirstName !=null && e.FirstName.Contains(firstName)));
+        firstName = firstName.ToLower();
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees.Where(e=> e.FirstName !=null && e.FirstName.ToLower().Contains(firstName)));
     }
-    public Task<IQueryable<Employee?>> GetEmployeesByLastName(string lastName)
+    public Task<IQueryable<Employee>> GetEmployeesByLastName(string lastName)
     {
-        var result = new List<Employee?>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            result.Add(employee);
-        }
-        return Task.Run(() => result.AsQueryable().Where(e => e.FirstName != null && e.FirstName.Contains(lastName)));
+        lastName = lastName.ToLower();
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees.Where(e => e.FirstName != null && e.FirstName.ToLower().Contains(lastName)));
     }
 
-    public Task<IQueryable<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<IQueryable<Employee>> GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
-        var result = new List<Employee?>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            if (equalTo)
-                employee.Salary = salary;
-            else if (greaterThan && !lessThan)
-                employee.Salary = new Random().Next((int)salary + 1000, (int)salary + 15000);
-            else if (lessThan && !greaterThan)
-                employee.Salary = new Random().Next((int)salary - 1000, (int)salary - 15000);
-            else
-                throw new ArgumentException($"Invalid Parameters; {nameof(salary)} must be a number, " +
-                    $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
 
-            result.Add(employee);
-        }
-        return Task.Run(() => result.AsQueryable());
+        if (equalTo)
+            return Task.FromResult(employees.Where(e => e.Salary == salary));
+        else if (greaterThan && !lessThan)
+            return Task.FromResult(employees.Where(e => e.Salary > salary));
+        else if (lessThan && !greaterThan)
+            return Task.FromResult(employees.Where(e => e.Salary < salary));
+        else
+            throw new ArgumentException($"Invalid Parameters; {nameof(salary)} must be a number, " +
+                $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
     }
 
-    public Task<IQueryable<Employee?>> GetEmployeesByTitle(string title)
+    public Task<IQueryable<Employee>> GetEmployeesByTitle(string title)
     {
-        var result = new List<Employee?>();
-        for (int i = 0; i < new Random().Next(50, 100); i++)
-        {
-            var employee = _employeeFactory.CreateGenericEmployee();
-            employee.Title = title;
-            result.Add(employee);
-        }
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
 
-        return Task.Run(() => result.AsQueryable());
+        return Task.FromResult(employees.Where(e => e.Title !=null && e.Title.Contains(title)));
     }
 
     public Task<int> InsertEmployee(Employee employee)
