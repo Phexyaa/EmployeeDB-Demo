@@ -117,7 +117,7 @@ public class MockDataAccess : IDataService
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.FirstName != null && e.FirstName.ToLower().Contains(lastName)).ToList());
+        return Task.FromResult(employees.Where(e => e.LastName != null && e.LastName.ToLower().Contains(lastName)).ToList());
     }
 
     public Task<List<Employee>> GetEmployeesBySalary(decimal salary, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
