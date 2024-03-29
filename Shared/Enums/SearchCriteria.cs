@@ -13,5 +13,6 @@ public enum SearchCriteria
     Age,
     Title,
     Salary,
-    IsActive
+    IsActive,
+    EmployeeId
 }
