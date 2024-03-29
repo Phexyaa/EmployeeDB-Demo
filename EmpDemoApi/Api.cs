@@ -17,7 +17,7 @@ public static class Api
         app.MapGet("/GetEmployeeByEmployeeId/{employeeId}", GetEmployeeByEmployeeId).WithName("GetEmployeeByEmployeeId").WithOpenApi();
         app.MapGet("/GetEmployeeByDatabaseId/{databaseId}", GetEmployeeByDatabaseId).WithName("GetEmployeeByDatabaseId").WithOpenApi();
         app.MapGet("/GetEmployeesByAge/{age}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByAge).WithName("GetEmployeesByAge").WithOpenApi();
-        app.MapGet("/GetEmployeesByHireDate{hireDate}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByHireDate).WithName("GetEmployeesByHireDate").WithOpenApi();
+        app.MapGet("/GetEmployeesByHireDate/{hireDate}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByHireDate).WithName("GetEmployeesByHireDate").WithOpenApi();
         app.MapGet("/GetEmployeesByFirstName/{firstName}", GetEmployeesByFirstName).WithName("GetEmployeesByFirstName").WithOpenApi();
         app.MapGet("/GetEmployeesByLastName/{lastName}", GetEmployeesByLastName).WithName("GetEmployeesByLastName").WithOpenApi();
         app.MapGet("/GetEmployeesBySalary/{salary}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesBySalary).WithName("GetEmployeesBySalary").WithOpenApi();
@@ -33,12 +33,12 @@ public static class Api
     {
         return true;
     }
-    private static async Task<Employee?> GetEmployeeByDatabaseId([FromServices] IDataService data,
+    private static async Task<List<Employee>> GetEmployeeByDatabaseId([FromServices] IDataService data,
                                                                  [FromRoute] int databaseId)
     {
         return await data.GetEmployeeByDatabaseId(databaseId);
     }
-    private static async Task<Employee?> GetEmployeeByEmployeeId([FromServices] IDataService data,
+    private static async Task<List<Employee>> GetEmployeeByEmployeeId([FromServices] IDataService data,
                                                                  [FromRoute] Guid employeeId)
     {
         return await data.GetEmployeeByEmployeeId(employeeId);
@@ -64,7 +64,7 @@ public static class Api
         return await data.GetEmployeesByAge(age, greaterThan, lessThan, equalTo)!;
     }
     private static async Task<List<Employee?>> GetEmployeesByHireDate([FromServices] IDataService data,
-                                                                [FromRoute] DateTime hireDate,
+                                                                [FromRoute] string hireDate,
                                                                 [FromRoute] bool greaterThan,
                                                                 [FromRoute] bool lessThan,
                                                                 [FromRoute] bool equalTo)

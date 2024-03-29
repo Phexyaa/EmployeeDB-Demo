@@ -26,12 +26,12 @@ namespace Shared.Test
 
         }
 
-        public async Task<Employee> GetEmployeeByEmployeeId(Guid employeeId)
+        public async Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId)
         {
             return await _dataAccess.GetEmployeeByEmployeeId(employeeId);
         }
 
-        public async Task<Employee> GetEmployeeByDatabaseId(int databaseId)
+        public async Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId)
         {
             return await _dataAccess.GetEmployeeByDatabaseId(databaseId);
         }
@@ -56,7 +56,7 @@ namespace Shared.Test
             return await _dataAccess.GetEmployeesByAge(age, greaterThan, lessThan, equalTo);
         }
 
-        public async Task<List<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<List<Employee?>> GetEmployeesByHireDate(string hireDate, bool greaterThan, bool lessThan, bool equalTo)
         {
             return await _dataAccess.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo);
         }

@@ -43,38 +43,38 @@ internal class ApiService : IApiService
             return false;
     }
 
-    public async Task<Employee> GetEmployeeByEmployeeId(Guid employeeId)
+    public async Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId)
     {
         var response = await _client.GetAsync($"GetEmployeeByEmployeeId/{employeeId}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<Employee>(json, _jsonSerializerOptions);
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
                 return result;
             else
-                return new Employee();
+                return new List<Employee>();
         }
         else
-            return new Employee();
+            return new List<Employee>();
     }
 
-    public async Task<Employee> GetEmployeeByDatabaseId(int databaseId)
+    public async Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId)
     {
         var response = await _client.GetAsync($"GetEmployeeByDatabaseId/{databaseId}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<Employee>(json, _jsonSerializerOptions);
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
             if (result is not null)
                 return result;
             else
-                return new Employee();
+                return new List<Employee>();
         }
         else
-            return new Employee();
+            return new List<Employee>();
     }
-    public async Task<List<Employee?>> GetAllEmployees()
+    public async Task<List<Employee>> GetAllEmployees()
     {
         var response = await _client.GetAsync("GetAllEmployees");
         if (response.IsSuccessStatusCode)
@@ -124,7 +124,7 @@ internal class ApiService : IApiService
 
     public async Task<List<Employee?>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
     {
-        var response = await _client.GetAsync("GetEmployeesByAge");
+        var response = await _client.GetAsync($"GetEmployeesByAge/{age}/{greaterThan}/{lessThan}/{equalTo}\"");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -138,9 +138,9 @@ internal class ApiService : IApiService
             return new List<Employee>();
     }
 
-    public async Task<List<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
+    public async Task<List<Employee?>> GetEmployeesByHireDate(string hireDate, bool greaterThan, bool lessThan, bool equalTo)
     {
-        var response = await _client.GetAsync("GetEmployeesByHireDate");
+        var response = await _client.GetAsync($"GetEmployeesByHireDate/{hireDate}/{greaterThan}/{lessThan}/{equalTo}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -187,7 +187,7 @@ internal class ApiService : IApiService
 
     public async Task<List<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
     {
-        var response = await _client.GetAsync("GetEmployeesBySalary");
+        var response = await _client.GetAsync($"GetEmployeesBySalary/{salary}/{greaterThan}/{lessThan}/{equalTo}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -203,7 +203,7 @@ internal class ApiService : IApiService
 
     public async Task<List<Employee?>> GetEmployeesByTitle(string title)
     {
-        var response = await _client.GetAsync("GetEmployeesByTitle");
+        var response = await _client.GetAsync($"GetEmployeesByTitle/{title}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();

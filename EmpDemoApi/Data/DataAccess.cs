@@ -13,18 +13,18 @@ public class DataAccess : IDataService
     private readonly IConfiguration _config;
 
     public DataAccess(IConfiguration config) => _config = config;
-    public async Task<Employee?> GetEmployeeByDatabaseId(int databaseId)
+    public async Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeeByDatabaseId", databaseId, null, commandType: CommandType.StoredProcedure);;
-        var result = response.FirstOrDefault();
+        var result = response.ToList();
         return result;
     }
-    public async Task<Employee?> GetEmployeeByEmployeeId(Guid id)
+    public async Task<List<Employee>> GetEmployeeByEmployeeId(Guid id)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByEmployeeId", id, null, commandType: CommandType.StoredProcedure);;
-        var result = response.FirstOrDefault();
+        var result = response.ToList();
         return result;
     }
     public async Task<List<Employee?>> GetAllActiveEmployees()
@@ -55,10 +55,10 @@ public class DataAccess : IDataService
         var result = response.ToList();
         return result;
     }
-    public async Task<List<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo = true)
+    public async Task<List<Employee?>> GetEmployeesByHireDate(string hireDate, bool greaterThan, bool lessThan, bool equalTo = true)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var response = await connection.QueryAsync<Employee>("SpGetEmployeesByHireDate", hireDate.ToShortDateString(), null, commandType: CommandType.StoredProcedure);
+        var response = await connection.QueryAsync<Employee>("SpGetEmployeesByHireDate", hireDate, null, commandType: CommandType.StoredProcedure);
         var result = response.ToList();
         return result;
     }

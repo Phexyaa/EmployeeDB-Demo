@@ -88,7 +88,7 @@ namespace DesktopApp
                         break;
                     case SearchCriteria.HireDate:
                         DateTime.TryParse(keyword, out var hireDate);
-                        Employees = await _apiService!.GetEmployeesByHireDate(hireDate, false, false, true);
+                        Employees = await _apiService!.GetEmployeesByHireDate(hireDate.ToString("MM-dd-yyyy"), false, false, true);
                         break;
                     case SearchCriteria.Age:
                         int.TryParse(keyword, out int age);
@@ -110,8 +110,7 @@ namespace DesktopApp
                         break;
                     case SearchCriteria.EmployeeId:
                         Guid.TryParse(keyword, out Guid id);
-                        Employees.Clear();
-                        Employees.Add(await _apiService!.GetEmployeeByEmployeeId(id));
+                        Employees = await _apiService!.GetEmployeeByEmployeeId(id   );
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(SelectedSearchCriteria));

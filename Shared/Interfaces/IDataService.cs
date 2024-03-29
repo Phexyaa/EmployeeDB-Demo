@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace Shared.Interfaces;
 public interface IDataService
 {
-    public Task<Employee> GetEmployeeByEmployeeId(Guid employeeId);
-    public Task<Employee> GetEmployeeByDatabaseId(int databaseId);
+    public Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId);
+    public Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId);
     public  Task<List<Employee>> GetAllEmployees();
     public  Task<List<Employee>> GetAllActiveEmployees();
     public  Task<List<Employee>> GetAllInactiveEmployees();
     public  Task<List<Employee>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo);
-    public  Task<List<Employee>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo);
+    public  Task<List<Employee>> GetEmployeesByHireDate(string hireDate, bool greaterThan, bool lessThan, bool equalTo);
     public Task<List<Employee>> GetEmployeesByFirstName(string firstName);
     public Task<List<Employee>> GetEmployeesByLastName(string lastName);
     public  Task<List<Employee>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo);

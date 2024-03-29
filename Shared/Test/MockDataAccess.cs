@@ -13,22 +13,8 @@ public class MockDataAccess : IDataService
     {
         _employeeFactory = employeeFactory;
     }
-
-
-    public Task<Employee> GetEmployeeByDatabaseId(int databaseId)
+    private List<Employee> GenerateEmployees()
     {
-        var employee = _employeeFactory.CreateGenericEmployee() ?? new Employee();
-        employee.Id = databaseId;
-        return Task.Run(()=> employee);
-    }
-
-    public Task<Employee> GetEmployeeByEmployeeId(Guid id)
-    {
-        var employee = _employeeFactory.CreateGenericEmployee() ?? new Employee();
-        employee.EmployeeId = id;
-        return Task.Run(() => employee);
-    }
-    private List<Employee> GenerateEmployees() {
         var result = new List<Employee>();
         for (int i = 0; i < new Random().Next(50, 100); i++)
         {
@@ -37,6 +23,22 @@ public class MockDataAccess : IDataService
             result.Add(employee);
         }
         return result;
+    }
+
+    public Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId)
+    {
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees.Where(e => e.Id == databaseId).ToList());
+    }
+
+    public Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId)
+    {
+        if (employees.Count() == 0)
+            employees = GenerateEmployees();
+
+        return Task.FromResult(employees.Where(e => e.EmployeeId == employeeId).ToList());
     }
     public Task<List<Employee>> GetAllActiveEmployees()
     {
@@ -78,11 +80,11 @@ public class MockDataAccess : IDataService
                 $"{nameof(greaterThan)} and {nameof(lessThan)} cannot be the same value");
     }
 
-    public Task<List<Employee>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
+    public Task<List<Employee>> GetEmployeesByHireDate(string hireDateString, bool greaterThan = false, bool lessThan = false, bool equalTo = true)
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
-
+        DateTime.TryParse(hireDateString, out DateTime hireDate);
         var employee = _employeeFactory.CreateGenericEmployee();
         var randomHighYear = new Random().Next(hireDate.Year + 1, hireDate.Year + 10);
         var randomLowYear = 0;
