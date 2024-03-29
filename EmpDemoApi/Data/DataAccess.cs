@@ -62,11 +62,17 @@ public class DataAccess : IDataService
         var result = response.AsQueryable();
         return result;
     }
-    public async Task<IQueryable<Employee?>> GetEmployeesByName(string? firstName = null, string? lastName = null)
+    public async Task<IQueryable<Employee?>> GetEmployeesByFirstName(string firstName)
     {
-        var parameters = new string?[] { firstName, lastName };
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var response = await connection.QueryAsync<Employee>("SpGetEmployeesByName", parameters, null, commandType: CommandType.StoredProcedure);
+        var response = await connection.QueryAsync<Employee>("SpGetEmployeesByFirstName", firstName, null, commandType: CommandType.StoredProcedure);
+        var result = response.AsQueryable();
+        return result;
+    }
+    public async Task<IQueryable<Employee?>> GetEmployeesByLastName(string lastName)
+    {
+        using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
+        var response = await connection.QueryAsync<Employee>("SpGetEmployeesByLastName", lastName, null, commandType: CommandType.StoredProcedure);
         var result = response.AsQueryable();
         return result;
     }
@@ -87,19 +93,19 @@ public class DataAccess : IDataService
     public async Task<int> InsertEmployee(Employee employee)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var result = connection.Execute("SpInsertEmployee", employee, null, commandType: CommandType.StoredProcedure);;
+        var result = await connection.ExecuteAsync("SpInsertEmployee", employee, null, commandType: CommandType.StoredProcedure);;
         return result;
     }
     public async Task<int> UpdateEmployee(Employee employee)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var result = connection.Execute("SpUpdateEmployee", employee, null, commandType: CommandType.StoredProcedure);;
+        var result = await connection.ExecuteAsync("SpUpdateEmployee", employee, null, commandType: CommandType.StoredProcedure);;
         return result;
     }
     public async Task<int> DeleteEmployeeRecord(int databaseId)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
-        var result = connection.Execute("SpDeleteEmployeeRecord", databaseId, null, commandType: CommandType.StoredProcedure);;
+        var result = await connection.ExecuteAsync("SpDeleteEmployeeRecord", databaseId, null, commandType: CommandType.StoredProcedure);;
         return result;
     }
 

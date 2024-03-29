@@ -18,7 +18,8 @@ public static class Api
         app.MapGet("/GetEmployeeByDatabaseId{databaseId}", GetEmployeeByDatabaseId).WithName("GetEmployeeByDatabaseId").WithOpenApi();
         app.MapGet("/GetEmployeesByAge{age}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByAge).WithName("GetEmployeesByAge").WithOpenApi();
         app.MapGet("/GetEmployeesByHireDate{hireDate}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByHireDate).WithName("GetEmployeesByHireDate").WithOpenApi();
-        app.MapGet("/GetEmployeesByName{firstName}/{lastName}", GetEmployeesByName).WithName("GetEmployeesByName").WithOpenApi();
+        app.MapGet("/GetEmployeesByFirstName{firstName}", GetEmployeesByLastName).WithName("GetEmployeesByFirstName").WithOpenApi();
+        app.MapGet("/GetEmployeesByLastName{lastName}", GetEmployeesByLastName).WithName("GetEmployeesByLastName").WithOpenApi();
         app.MapGet("/GetEmployeesBySalary{salary}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesBySalary).WithName("GetEmployeesBySalary").WithOpenApi();
         app.MapGet("/GetEmployeesByTitle{title}", GetEmployeesByTitle).WithName("GetEmployeesByTitle").WithOpenApi();
 
@@ -42,7 +43,7 @@ public static class Api
     {
         return await data.GetEmployeeByEmployeeId(employeeId);
     }
-    private static async Task<IQueryable<Employee>>? GetAllActiveEmployees([FromServices] IDataService data)
+    private static async Task<IQueryable<Employee?>> GetAllActiveEmployees([FromServices] IDataService data)
     {
         return await data.GetAllActiveEmployees()!;
     }
@@ -50,11 +51,11 @@ public static class Api
     {
         return await data.GetAllEmployees();
     }
-    private static async Task<IQueryable<Employee>>? GetAllInactiveEmployees([FromServices] IDataService data)
+    private static async Task<IQueryable<Employee?>> GetAllInactiveEmployees([FromServices] IDataService data)
     {
         return await data.GetAllInactiveEmployees()!;
     }
-    private static async Task<IQueryable<Employee>>? GetEmployeesByAge([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee?>> GetEmployeesByAge([FromServices] IDataService data,
                                                            [FromRoute] int age,
                                                            [FromRoute] bool greaterThan,
                                                            [FromRoute] bool lessThan,
@@ -62,7 +63,7 @@ public static class Api
     {
         return await data.GetEmployeesByAge(age, greaterThan, lessThan, equalTo)!;
     }
-    private static async Task<IQueryable<Employee>>? GetEmployeesByHireDate([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee?>> GetEmployeesByHireDate([FromServices] IDataService data,
                                                                 [FromRoute] DateTime hireDate,
                                                                 [FromRoute] bool greaterThan,
                                                                 [FromRoute] bool lessThan,
@@ -70,14 +71,19 @@ public static class Api
     {
         return await data.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo)!;
     }
-    private static async Task<IQueryable<Employee>>? GetEmployeesByName([FromServices] IDataService data,
-                                                            [FromRoute] string firstName,
-                                                            [FromRoute] string lastName)
+    private static async Task<IQueryable<Employee?>> GetEmployeesByFirstName([FromServices] IDataService data,
+                                                            [FromRoute] string firstName)
     {
-        return await data.GetEmployeesByName(firstName, lastName)!;
+        return await data.GetEmployeesByFirstName(firstName)!;
 
     }
-    private static async Task<IQueryable<Employee>>? GetEmployeesBySalary([FromServices] IDataService data,
+    private static async Task<IQueryable<Employee?>> GetEmployeesByLastName([FromServices] IDataService data,
+                                                            [FromRoute] string lastName)
+    {
+        return await data.GetEmployeesByLastName(lastName)!;
+
+    }
+    private static async Task<IQueryable<Employee?>> GetEmployeesBySalary([FromServices] IDataService data,
                                                               [FromRoute] decimal salary,
                                                               [FromRoute] bool greaterThan,
                                                               [FromRoute] bool lessThan,
@@ -85,7 +91,7 @@ public static class Api
     {
         return await data.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo)!;
     }
-    private static async Task<IQueryable<Employee>>? GetEmployeesByTitle([FromKeyedServices("D" +
+    private static async Task<IQueryable<Employee?>> GetEmployeesByTitle([FromKeyedServices("D" +
         "ataAccess")] IDataService data, [FromRoute] string title)
     {
         return await data.GetEmployeesByTitle(title)!;
