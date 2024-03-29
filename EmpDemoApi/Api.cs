@@ -12,16 +12,16 @@ public static class Api
     {
         app.MapGet("/ConnectionTest", ConnectionTest).WithName("ConnectionTest").WithOpenApi();
         app.MapGet("/GetAllEmployees", GetAllEmployees).WithName("GetAllEmployees").WithOpenApi();
-        app.MapGet("/GetAllActiveEmployees{isActive}", GetAllActiveEmployees).WithName("GetAllActiveEmployees").WithOpenApi();
-        app.MapGet("/GetAllInactiveEmployees{isActive}", GetAllInactiveEmployees).WithName("GetAllInactiveEmployees").WithOpenApi();
-        app.MapGet("/GetEmployeeByEmployeeId{employeeId}", GetEmployeeByEmployeeId).WithName("GetEmployeeByEmployeeId").WithOpenApi();
-        app.MapGet("/GetEmployeeByDatabaseId{databaseId}", GetEmployeeByDatabaseId).WithName("GetEmployeeByDatabaseId").WithOpenApi();
-        app.MapGet("/GetEmployeesByAge{age}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByAge).WithName("GetEmployeesByAge").WithOpenApi();
+        app.MapGet("/GetAllActiveEmployees", GetAllActiveEmployees).WithName("GetAllActiveEmployees").WithOpenApi();
+        app.MapGet("/GetAllInactiveEmployees", GetAllInactiveEmployees).WithName("GetAllInactiveEmployees").WithOpenApi();
+        app.MapGet("/GetEmployeeByEmployeeId/{employeeId}", GetEmployeeByEmployeeId).WithName("GetEmployeeByEmployeeId").WithOpenApi();
+        app.MapGet("/GetEmployeeByDatabaseId/{databaseId}", GetEmployeeByDatabaseId).WithName("GetEmployeeByDatabaseId").WithOpenApi();
+        app.MapGet("/GetEmployeesByAge/{age}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByAge).WithName("GetEmployeesByAge").WithOpenApi();
         app.MapGet("/GetEmployeesByHireDate{hireDate}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesByHireDate).WithName("GetEmployeesByHireDate").WithOpenApi();
-        app.MapGet("/GetEmployeesByFirstName{firstName}", GetEmployeesByLastName).WithName("GetEmployeesByFirstName").WithOpenApi();
-        app.MapGet("/GetEmployeesByLastName{lastName}", GetEmployeesByLastName).WithName("GetEmployeesByLastName").WithOpenApi();
-        app.MapGet("/GetEmployeesBySalary{salary}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesBySalary).WithName("GetEmployeesBySalary").WithOpenApi();
-        app.MapGet("/GetEmployeesByTitle{title}", GetEmployeesByTitle).WithName("GetEmployeesByTitle").WithOpenApi();
+        app.MapGet("/GetEmployeesByFirstName/{firstName}", GetEmployeesByFirstName).WithName("GetEmployeesByFirstName").WithOpenApi();
+        app.MapGet("/GetEmployeesByLastName/{lastName}", GetEmployeesByLastName).WithName("GetEmployeesByLastName").WithOpenApi();
+        app.MapGet("/GetEmployeesBySalary/{salary}/{greaterThan}/{lessThan}/{equalTo}", GetEmployeesBySalary).WithName("GetEmployeesBySalary").WithOpenApi();
+        app.MapGet("/GetEmployeesByTitle/{title}", GetEmployeesByTitle).WithName("GetEmployeesByTitle").WithOpenApi();
 
         app.MapPut("/InsertEmployee", InsertEmployee).WithName("InsertEmployee").WithOpenApi();
 
