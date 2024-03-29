@@ -43,9 +43,9 @@ internal class ApiService : IApiService
             return false;
     }
 
-    public async Task<Employee?> GetEmployeeByEmployeeId(Guid employeeId)
+    public async Task<Employee> GetEmployeeByEmployeeId(Guid employeeId)
     {
-        var response = await _client.GetAsync("GetEmployeeByEmployeeId");
+        var response = await _client.GetAsync($"GetEmployeeByEmployeeId/{employeeId}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -59,9 +59,9 @@ internal class ApiService : IApiService
             return new Employee();
     }
 
-    public async Task<Employee?> GetEmployeeByDatabaseId(int databaseId)
+    public async Task<Employee> GetEmployeeByDatabaseId(int databaseId)
     {
-        var response = await _client.GetAsync("GetEmployeeByDatabaseId");
+        var response = await _client.GetAsync($"GetEmployeeByDatabaseId/{databaseId}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -154,9 +154,24 @@ internal class ApiService : IApiService
             return new List<Employee>().AsQueryable();
     }
 
-    public async Task<IQueryable<Employee?>> GetEmployeesByName(string firstName, string lastName)
+    public async Task<IQueryable<Employee?>> GetEmployeesByFirstName(string firstName)
     {
-        var response = await _client.GetAsync("GetEmployeesByName");
+        var response = await _client.GetAsync($"GetEmployeesByFirstName/{firstName}");
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<List<Employee>>(json, _jsonSerializerOptions);
+            if (result is not null)
+                return result.AsQueryable();
+            else
+                return new List<Employee>().AsQueryable();
+        }
+        else
+            return new List<Employee>().AsQueryable();
+    }
+    public async Task<IQueryable<Employee?>> GetEmployeesByLastName(string lastName)
+    {
+        var response = await _client.GetAsync($"GetEmployeesByLastName/{lastName}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
