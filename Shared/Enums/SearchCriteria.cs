@@ -12,5 +12,6 @@ public enum SearchCriteria
     HireDate,
     Age,
     Title,
-    Salary
+    Salary,
+    IsActive
 }
