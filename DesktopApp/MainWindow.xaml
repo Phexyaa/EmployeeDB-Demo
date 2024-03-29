@@ -43,6 +43,10 @@
 								IsManipulationEnabled="False"
 								Width="150" />
 				</DataTemplate>
+				<DataTemplate x:Key="IsActiveTemplate">
+					<CheckBox IsHitTestVisible="False"
+							  IsChecked="{Binding IsActive}" />
+				</DataTemplate>
 			</DataGrid.Resources>
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="First Name"
@@ -53,6 +57,13 @@
 									Binding="{Binding Age}" />
 				<DataGridTextColumn Header="Salary"
 									Binding="{Binding Salary, StringFormat=C}" />
+				<DataGridTextColumn Header="Title"
+									Binding="{Binding Title}" />
+				<DataGridTextColumn Header="Employee Id"
+									Binding="{Binding EmployeeId}" />
+				<DataGridTemplateColumn Header="Current Employee"
+										CellTemplate="{StaticResource IsActiveTemplate }" />
+				<DataGridTextColumn Width="1*" />
 				<DataGridTemplateColumn Header="Hire Date"
 										CellTemplate="{StaticResource HireDateTemplate }" />
 				<DataGridTextColumn Width="1*" />
