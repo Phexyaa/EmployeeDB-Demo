@@ -36,42 +36,46 @@ namespace Shared.Test
             return await _dataAccess.GetEmployeeByDatabaseId(databaseId);
         }
 
-        public async Task<IQueryable<Employee>>? GetAllEmployees()
+        public async Task<IQueryable<Employee?>> GetAllEmployees()
         {
             return await _dataAccess.GetAllEmployees();
         }
 
-        public async Task<IQueryable<Employee>>? GetAllActiveEmployees()
+        public async Task<IQueryable<Employee?>> GetAllActiveEmployees()
         {
             return await _dataAccess.GetAllActiveEmployees();
         }
 
-        public async Task<IQueryable<Employee>>? GetAllInactiveEmployees()
+        public async Task<IQueryable<Employee?>> GetAllInactiveEmployees()
         {
             return await _dataAccess.GetAllInactiveEmployees();
         }
 
-        public async Task<IQueryable<Employee>>? GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<IQueryable<Employee?>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
         {
             return await _dataAccess.GetEmployeesByAge(age, greaterThan, lessThan, equalTo);
         }
 
-        public async Task<IQueryable<Employee>>? GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<IQueryable<Employee?>> GetEmployeesByHireDate(DateTime hireDate, bool greaterThan, bool lessThan, bool equalTo)
         {
             return await _dataAccess.GetEmployeesByHireDate(hireDate, greaterThan, lessThan, equalTo);
         }
 
-        public async Task<IQueryable<Employee>>? GetEmployeesByName(string firstName, string lastName)
+        public async Task<IQueryable<Employee?>> GetEmployeesByFirstName(string firstName)
         {
-            return await _dataAccess.GetEmployeesByName(firstName, lastName);
+            return await _dataAccess.GetEmployeesByFirstName(firstName);
+        }
+        public async Task<IQueryable<Employee?>> GetEmployeesByLastName(string lastName)
+        {
+            return await _dataAccess.GetEmployeesByLastName(lastName);
         }
 
-        public async Task<IQueryable<Employee>>? GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
+        public async Task<IQueryable<Employee?>> GetEmployeesBySalary(decimal salary, bool greaterThan, bool lessThan, bool equalTo)
         {
             return await _dataAccess.GetEmployeesBySalary(salary, greaterThan, lessThan, equalTo);
         }
 
-        public async Task<IQueryable<Employee>>? GetEmployeesByTitle(string title)
+        public async Task<IQueryable<Employee?>> GetEmployeesByTitle(string title)
         {
             return await _dataAccess.GetEmployeesByTitle(title);
         }
