@@ -124,7 +124,7 @@ internal class ApiService : IApiService
 
     public async Task<List<Employee?>> GetEmployeesByAge(int age, bool greaterThan, bool lessThan, bool equalTo)
     {
-        var response = await _client.GetAsync($"GetEmployeesByAge/{age}/{greaterThan}/{lessThan}/{equalTo}\"");
+        var response = await _client.GetAsync($"GetEmployeesByAge/{age}/{greaterThan}/{lessThan}/{equalTo}");
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();

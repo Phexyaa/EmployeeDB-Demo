@@ -48,6 +48,7 @@ namespace DesktopApp
         }
 
         public ICommand SearchCommand { get; }
+        public ICommand SearchCriteriaSelectedCommand { get; }
 
         private List<Employee> _employees = new();
         public List<Employee> Employees
@@ -55,6 +56,27 @@ namespace DesktopApp
             get => _employees;
             set => SetProperty(ref _employees, value);
         }
+        private bool _greaterThanComparison;
+        public bool GreaterThanComparison
+        {
+            get => _greaterThanComparison; set => SetProperty(ref _greaterThanComparison, value);
+        }
+        private bool _lessThanComparison;
+        public bool LessThanComparison
+        {
+            get => _lessThanComparison; set => SetProperty(ref _lessThanComparison, value);
+        }
+        private bool _equalToComparison = true;
+        public bool EqualToComparison
+        {
+            get => _equalToComparison; set => SetProperty(ref _equalToComparison, value);
+        }
+        private bool _isComparison;
+        public bool IsComparison
+        {
+            get => _isComparison; set => SetProperty(ref _isComparison, value);
+        }
+
         public MainWindowViewModel()
         {
             var defaultService = App.Current.Services.GetService<IOptionsMonitor<Defaults>>();
@@ -68,6 +90,7 @@ namespace DesktopApp
                 throw new NullReferenceException(nameof(_apiService));
 
             SearchCommand = new AsyncRelayCommand<string>(Search);
+            SearchCriteriaSelectedCommand = new RelayCommand<SearchCriteria>(SearchCriteriaSelected);
 
             _connectionTestTimer = new Timer(UpdateConnectionStatusIcon, null, 0, 10000);
 
@@ -88,18 +111,18 @@ namespace DesktopApp
                         break;
                     case SearchCriteria.HireDate:
                         DateTime.TryParse(keyword, out var hireDate);
-                        Employees = await _apiService!.GetEmployeesByHireDate(hireDate.ToString("MM-dd-yyyy"), false, false, true);
+                        Employees = await _apiService!.GetEmployeesByHireDate(hireDate.ToString("MM-dd-yyyy"), GreaterThanComparison, LessThanComparison, EqualToComparison);
                         break;
                     case SearchCriteria.Age:
                         int.TryParse(keyword, out int age);
-                        Employees = await _apiService!.GetEmployeesByAge(age, false, false, true);
+                        Employees = await _apiService!.GetEmployeesByAge(age, GreaterThanComparison, LessThanComparison, EqualToComparison);
                         break;
                     case SearchCriteria.Title:
                         Employees = await _apiService!.GetEmployeesByTitle(keyword);
                         break;
                     case SearchCriteria.Salary:
                         decimal.TryParse(keyword, out decimal salary);
-                        Employees = await _apiService!.GetEmployeesBySalary(salary, false, false, true);
+                        Employees = await _apiService!.GetEmployeesBySalary(salary, GreaterThanComparison, LessThanComparison, EqualToComparison);
                         break;
                     case SearchCriteria.IsActive:
                         bool.TryParse(keyword, out bool active);
@@ -110,7 +133,7 @@ namespace DesktopApp
                         break;
                     case SearchCriteria.EmployeeId:
                         Guid.TryParse(keyword, out Guid id);
-                        Employees = await _apiService!.GetEmployeeByEmployeeId(id   );
+                        Employees = await _apiService!.GetEmployeeByEmployeeId(id);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(SelectedSearchCriteria));
@@ -118,6 +141,37 @@ namespace DesktopApp
             }
             else
                 Employees = await _apiService!.GetAllEmployees();
+        }
+
+        public void SearchCriteriaSelected(SearchCriteria selectedCriteria)
+        {
+            switch (selectedCriteria)
+            {
+                case SearchCriteria.FirstName:
+                    IsComparison = false;
+                    break;
+                case SearchCriteria.LastName:
+                    IsComparison = false;
+                    break;
+                case SearchCriteria.HireDate:
+                    IsComparison = true;
+                    break;
+                case SearchCriteria.Age:
+                    IsComparison = true;
+                    break;
+                case SearchCriteria.Title:
+                    IsComparison = false;
+                    break;
+                case SearchCriteria.Salary:
+                    IsComparison = true;
+                    break;
+                case SearchCriteria.IsActive:
+                    IsComparison = false;
+                    break;
+                case SearchCriteria.EmployeeId:
+                    IsComparison = false;
+                    break;
+            }
         }
 
         private async Task<bool> CheckConnection() => await _apiService!.ConnectionTest();

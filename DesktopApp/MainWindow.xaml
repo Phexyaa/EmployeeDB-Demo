@@ -4,11 +4,11 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:DesktopApp"
-		xmlns:mwvm="DesktopApp"
+		xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
 		mc:Ignorable="d"
 		Title="{Binding Title}"
-		Height="450"
-		Width="800"
+		MinHeight="450"
+		MinWidth="800"
 		Background="#FF2A1B1B">
 	<Window.DataContext>
 		<local:MainWindowViewModel />
@@ -16,14 +16,16 @@
 	<Window.Resources>
 		<local:MainWindowViewModel x:Key="MainWindowViewModel" />
 	</Window.Resources>
-	<Grid x:Name="MainGrid">
+	<Grid x:Name="MainGrid"
+		  ClipToBounds="True"
+		  ScrollViewer.CanContentScroll="True">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="30" />
+			<RowDefinition Height="75" />
 			<RowDefinition Height="1*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
-			<ColumnDefinition Width="3*" />
+			<ColumnDefinition Width="5*" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 		<DataGrid x:Name="ResultsDataGrid"
@@ -62,8 +64,7 @@
 				<DataGridTextColumn Header="Employee Id"
 									Binding="{Binding EmployeeId}" />
 				<DataGridTemplateColumn Header="Current Employee"
-										CellTemplate="{StaticResource IsActiveTemplate }" />
-				<DataGridTextColumn Width="1*" />
+										CellTemplate="{StaticResource IsActiveTemplate }" /> 
 				<DataGridTemplateColumn Header="Hire Date"
 										CellTemplate="{StaticResource HireDateTemplate }" />
 				<DataGridTextColumn Width="1*" />
@@ -86,43 +87,70 @@
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
-				<Label x:Name="CriteraLabel"
-					   Content="{Binding CriteriaLabelText}"
-					   HorizontalAlignment="Left"
-					   Foreground="White"
-					   VerticalAlignment="Center"
-					   Margin="0,0,5,0" />
-				<ComboBox x:Name="CriteriaSelect"
-						  VerticalAlignment="Center"
-						  Grid.Column="1"
-						  Width="150"
-						  HorizontalAlignment="Left"
-						  ItemsSource="{Binding Settings.SearchCriteriaToString}"
-						  SelectedValue="{Binding SelectedSearchCriteria, Mode=TwoWay}"
-						  DisplayMemberPath="Value"
-						  SelectedValuePath="Key">
-				</ComboBox>
+				<StackPanel Orientation="Horizontal">
+					<Label x:Name="CriteraLabel"
+						   Content="{Binding CriteriaLabelText}"
+						   Foreground="White"
+						   d:LayoutOverrides="LeftPosition, RightPosition" />
+					<ComboBox x:Name="CriteriaSelect"
+							  Width="150"
+							  ItemsSource="{Binding Settings.SearchCriteriaToString}"
+							  SelectedValue="{Binding SelectedSearchCriteria, Mode=TwoWay}"
+							  DisplayMemberPath="Value"
+							  SelectedValuePath="Key"
+							  Height="25"
+							  Margin="0,0,5,0">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="SelectionChanged">
+								<i:InvokeCommandAction Command="{Binding SearchCriteriaSelectedCommand}"
+													   CommandParameter="{Binding ElementName=CriteriaSelect, Path=SelectedValue}" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</ComboBox>
+					<StackPanel Width="100"
+								VerticalAlignment="Center">
+						<RadioButton x:Name="GreaterThanRadio"
+									 Content="Greater Than"
+									 Foreground="White"
+									 GroupName="ComparisonType"
+									 IsChecked="{Binding GreaterThanComparison}" 
+									 IsEnabled="{Binding IsComparison}"/>
+						<RadioButton x:Name="LessThanRadio"
+									 Content="Less Than"
+									 Foreground="White"
+									 GroupName="ComparisonType"
+									 IsChecked="{Binding LessThanComparison}"
+									 IsEnabled="{Binding IsComparison}" />
+						<RadioButton x:Name="EqualTo"
+									 Content="Equal To"
+									 Foreground="White"
+									 GroupName="ComparisonType"
+									 IsChecked="{Binding EqualToComparison}"
+									 IsEnabled="{Binding IsComparison}" />
+					</StackPanel>
+				</StackPanel>
 			</Grid>
 			<Grid x:Name="SearchGrid"
 				  VerticalAlignment="Center"
 				  Width="NaN"
-				  Grid.Column="1"
-				  HorizontalAlignment="Left">
+				  Grid.Column="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="2*" />
 					<ColumnDefinition Width="1*" />
 				</Grid.ColumnDefinitions>
+			</Grid>
+			<StackPanel Grid.Column="1"
+						Orientation="Horizontal">
 				<TextBox x:Name="SearchBox"
-						 TextWrapping="Wrap"
-						 VerticalAlignment="Top"
+						 TextWrapping="NoWrap"
 						 Height="25"
-						 MinWidth="150" />
+						 Margin="0,0,0,0"
+						 Width="250"
+						 MaxWidth="250" />
 				<Button x:Name="SearchButton"
-						Grid.Column="1"
 						Command="{Binding SearchCommand}"
 						CommandParameter="{Binding Text, ElementName=SearchBox}"
 						Background="#FF5D4949"
-						VerticalAlignment="Center"
 						Height="25"
 						Width="25">
 					<Image x:Name="SearchIcon"
@@ -131,10 +159,9 @@
 						   Source="/Assets/search.png"
 						   Panel.ZIndex="4"
 						   HorizontalAlignment="Center"
-						   VerticalAlignment="Center"
-						   d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" />
+						   VerticalAlignment="Center" />
 				</Button>
-			</Grid>
+			</StackPanel>
 		</Grid>
 		<Grid x:Name="LinkStatusGrid"
 			  HorizontalAlignment="Right"
