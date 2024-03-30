@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -219,7 +220,7 @@ internal class ApiService : IApiService
 
     public async Task<int> InsertEmployee(Employee employee)
     {
-        var response = await _client.GetAsync("InsertEmployee");
+        var response = await _client.PutAsJsonAsync("InsertEmployee", employee);
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -232,7 +233,7 @@ internal class ApiService : IApiService
 
     public async Task<int> UpdateEmployee(Employee employee)
     {
-        var response = await _client.GetAsync("UpdateEmployee");
+        var response = await _client.PostAsJsonAsync("UpdateEmployee", employee);
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
@@ -244,7 +245,7 @@ internal class ApiService : IApiService
     }
     public async Task<int> DeleteEmployeeRecord(int databaseId)
     {
-        var response = await _client.GetAsync("DeleteEmployeeRecord");
+        var response = await _client.PostAsJsonAsync("DeleteEmployeeRecord", databaseId);
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
