@@ -11,6 +11,7 @@ using Shared.Global;
 using DesktopApp.Dialogs;
 using Shared.Interfaces;
 using System.Text.Json;
+using DesktopApp.Dialogs.ViewModels;
 
 namespace DesktopApp
 {
