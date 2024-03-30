@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace DesktopApp.Dialogs;
+namespace DesktopApp.Dialogs.Views;
 /// <summary>
 /// Interaction logic for ErrorMessage.xaml
 /// </summary>

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DesktopApp.Dialogs;
+namespace DesktopApp.Dialogs.Views;
 /// <summary>
 /// Interaction logic for Window1.xaml
 /// </summary>

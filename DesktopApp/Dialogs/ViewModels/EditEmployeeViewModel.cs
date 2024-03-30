@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Text.Json;
 using System.CodeDom;
 using DesktopApp.Validators;
+using DesktopApp.Dialogs.Views;
 
 namespace DesktopApp.Dialogs.ViewModels
 {

@@ -12,16 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace DesktopApp.Dialogs
+namespace DesktopApp.Dialogs.Views;
+/// <summary>
+/// Interaction logic for YesNoDialog.xaml
+/// </summary>
+public partial class YesNoDialogView : Window
 {
-    /// <summary>
-    /// Interaction logic for YesNoDialog.xaml
-    /// </summary>
-    public partial class YesNoDialogView : Window
+    public YesNoDialogView()
     {
-        public YesNoDialogView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

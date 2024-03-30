@@ -12,6 +12,7 @@ using DesktopApp.Dialogs;
 using Shared.Interfaces;
 using System.Text.Json;
 using DesktopApp.Dialogs.ViewModels;
+using DesktopApp.Dialogs.Views;
 
 namespace DesktopApp
 {
