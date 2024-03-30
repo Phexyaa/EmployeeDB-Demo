@@ -18,7 +18,7 @@ public class DataAccess : IDataService
         var result = response.ToList();
         return result;
     }
-    public async Task<List<Employee>> GetEmployeeByEmployeeId(Guid id)
+    public async Task<List<Employee>> GetEmployeeByEmployeeId(string id)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
         var response = await connection.QueryAsync<Employee>("SpGetEmployeesByEmployeeId", id, null, commandType: CommandType.StoredProcedure);;

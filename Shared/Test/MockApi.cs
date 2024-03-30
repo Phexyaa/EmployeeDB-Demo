@@ -26,7 +26,7 @@ namespace Shared.Test
 
         }
 
-        public async Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId)
+        public async Task<List<Employee>> GetEmployeeByEmployeeId(string employeeId)
         {
             return await _dataAccess.GetEmployeeByEmployeeId(employeeId);
         }

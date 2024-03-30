@@ -32,12 +32,12 @@ public class MockDataAccess : IDataService
         return Task.FromResult(employees.Where(e => e.Id == databaseId).ToList());
     }
 
-    public Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId)
+    public Task<List<Employee>> GetEmployeeByEmployeeId(string employeeId)
     {
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.EmployeeId == employeeId).ToList());
+        return Task.FromResult(employees.Where(e => e.EmployeeId.Contains(employeeId)).ToList());
     }
     public Task<List<Employee>> GetAllActiveEmployees()
     {

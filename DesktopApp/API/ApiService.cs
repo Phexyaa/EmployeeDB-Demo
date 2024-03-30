@@ -38,7 +38,7 @@ internal class ApiService : IApiService
             return false;
     }
 
-    public async Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId)
+    public async Task<List<Employee>> GetEmployeeByEmployeeId(string employeeId)
     {
         var response = await _client.GetAsync($"GetEmployeeByEmployeeId/{employeeId}");
         if (response.IsSuccessStatusCode)

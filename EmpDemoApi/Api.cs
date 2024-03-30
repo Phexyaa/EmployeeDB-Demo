@@ -37,7 +37,7 @@ public static class Api
         return await data.GetEmployeeByDatabaseId(databaseId);
     }
     private static async Task<List<Employee>> GetEmployeeByEmployeeId([FromServices] IDataService data,
-                                                                 [FromRoute] Guid employeeId)
+                                                                 [FromRoute] string employeeId)
     {
         return await data.GetEmployeeByEmployeeId(employeeId);
     }

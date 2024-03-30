@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Configuration;
+using System.Globalization;
 using System.Windows.Controls;
 
 namespace DesktopApp.Validators;
@@ -8,12 +9,15 @@ internal class EmployeeIdValidator : ValidationRule
     {
         try
         {
-            var id = (Guid)value;
+            var employeeId = (string)value;
+            StringValidator validator = new StringValidator(36, 36,"`~!@#$%^&*()_+={}[]|\\:;\"'<>,.?/");
+
+            validator.Validate(employeeId);
             return ValidationResult.ValidResult;
         }
-        catch (InvalidCastException e)
+        catch (InvalidCastException)
         {
-            return new ValidationResult(false, $"EmployeeID Format must match the following: {Guid.NewGuid()}");
+            return new ValidationResult(false, $"Employee ID Format must be similar to the following: {Guid.NewGuid()}");
         }
         catch (Exception e)
         {

@@ -180,7 +180,7 @@ public class MockEmployeeFactory : IEmployeeFactory
             LastName = LastNames[new Random().Next(0, LastNames.Count)],
             HireDate = RandomDate,
             Title = _defaults.EmployeeTitles![new Random().Next(0, _defaults.EmployeeTitles.Count)],
-            EmployeeId = Guid.NewGuid(),
+            EmployeeId = Guid.NewGuid().ToString(),
         };
     }
 }

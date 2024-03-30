@@ -3,7 +3,7 @@
 namespace Shared.Interfaces;
 public interface IDataService
 {
-    public Task<List<Employee>> GetEmployeeByEmployeeId(Guid employeeId);
+    public Task<List<Employee>> GetEmployeeByEmployeeId(string employeeId);
     public Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId);
     public  Task<List<Employee>> GetAllEmployees();
     public  Task<List<Employee>> GetAllActiveEmployees();

@@ -24,8 +24,8 @@ namespace Shared.Models
             get => _hireDate;
             set => SetProperty(ref _hireDate, value);
         }
-        private Guid _employeeId = Guid.NewGuid();
-        public Guid EmployeeId
+        private string _employeeId = Guid.NewGuid().ToString();
+        public string EmployeeId
         {
             get => _employeeId;
             set => SetProperty(ref _employeeId, value);
