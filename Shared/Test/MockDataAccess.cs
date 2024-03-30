@@ -148,6 +148,7 @@ public class MockDataAccess : IDataService
 
     public Task<int> InsertEmployee(Employee employee)
     {
+        employees.Add(employee);
         return Task.Run(() => {
             return new Random().Next(50, 100);
         });
