@@ -5,7 +5,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Windows.Input;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DesktopApp.Models;
 using Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -13,6 +12,7 @@ using Shared.Global;
 using System.Windows.Navigation;
 using System.Text.Json;
 using System.CodeDom;
+using DesktopApp.Validators;
 
 namespace DesktopApp.Dialogs.ViewModels
 {
@@ -55,7 +55,7 @@ namespace DesktopApp.Dialogs.ViewModels
         {
             ExitErrorCommand = new RelayCommand(() => ErrorVisibility = Visibility.Hidden);
             SaveCommand = new AsyncRelayCommand(UpdateEmployee);
-            SaveCommand.CanExecute(EmployeeValidator.Validate(Employee));
+            SaveCommand.CanExecute(EmployeeModelValidator.Validate(Employee));
             CancelCommand = new RelayCommand(() => CloseEvent?.Invoke(this, false));
             GenerateEmployeeIdCommand = new RelayCommand(RefreshEmployeeId);
 
@@ -94,7 +94,7 @@ namespace DesktopApp.Dialogs.ViewModels
 
         private async Task UpdateEmployee()
         {
-            if (EmployeeValidator.Validate(Employee))
+            if (EmployeeModelValidator.Validate(Employee))
             {
                 ErrorVisibility = Visibility.Hidden;
                 await _apiService.UpdateEmployee(Employee);

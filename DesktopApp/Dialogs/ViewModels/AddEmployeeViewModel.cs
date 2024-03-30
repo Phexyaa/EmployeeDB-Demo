@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DesktopApp.Models;
+using DesktopApp.Validators;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Shared.Global;
@@ -50,7 +50,7 @@ namespace DesktopApp.Dialogs.ViewModels
         {
             ExitErrorCommand = new RelayCommand(() => ErrorVisibility = Visibility.Hidden);
             SaveCommand = new AsyncRelayCommand(InsertEmployee);
-            SaveCommand.CanExecute(EmployeeValidator.Validate(Employee));
+            SaveCommand.CanExecute(EmployeeModelValidator.Validate(Employee));
             CancelCommand = new RelayCommand(() => CloseEvent?.Invoke(this, false));
             GenerateEmployeeIdCommand = new RelayCommand(RefreshEmployeeId);
 
@@ -71,7 +71,7 @@ namespace DesktopApp.Dialogs.ViewModels
         }
         private async Task InsertEmployee()
         {
-            if (EmployeeValidator.Validate(Employee))
+            if (EmployeeModelValidator.Validate(Employee))
             {
                 ErrorVisibility = Visibility.Hidden;
                 await _apiService.InsertEmployee(Employee);

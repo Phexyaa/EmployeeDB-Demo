@@ -1,5 +1,4 @@
-﻿using DesktopApp.Validators;
-using Shared.Models;
+﻿using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DesktopApp.Models;
-internal static class EmployeeValidator
+namespace DesktopApp.Validators;
+internal static class EmployeeModelValidator
 {
     internal static bool Validate(Employee employee)
     {
