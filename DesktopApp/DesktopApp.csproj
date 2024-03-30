@@ -12,10 +12,17 @@
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
+    <None Remove="Assets\arrow-clockwise.png" />
     <None Remove="Assets\database-check.png" />
     <None Remove="Assets\database-slash.png" />
+    <None Remove="Assets\hand-thumbs-down-fill.png" />
+    <None Remove="Assets\hand-thumbs-down.png" />
+    <None Remove="Assets\hand-thumbs-up-fill.png" />
+    <None Remove="Assets\hand-thumbs-up.png" />
+    <None Remove="Assets\pencil-fill.png" />
+    <None Remove="Assets\person-add.png" />
     <None Remove="Assets\search.png" />
-    <None Remove="Dialogs\x-octagon.png" />
+    <None Remove="Assets\x-octagon.png" />
     <None Remove="pencil-fill.png" />
     <None Remove="person-add.png" />
     <None Remove="search.svg" />
@@ -44,12 +51,39 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\database-check.png">
-      <CopyToOutputDirectory></CopyToOutputDirectory>
+    <Resource Include="Assets\arrow-clockwise.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\database-slash.png" />
-    <Resource Include="Assets\search.png" />
-    <Resource Include="Dialogs\x-octagon.png" />
+    <Resource Include="Assets\database-check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\database-slash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\hand-thumbs-down-fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\hand-thumbs-down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\hand-thumbs-up-fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\hand-thumbs-up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\pencil-fill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\person-add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\x-octagon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="pencil-fill.png" />
     <Resource Include="person-add.png" />
   </ItemGroup>
