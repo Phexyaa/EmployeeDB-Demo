@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[SpGetEmployeeByName]
 	@FirstName nvarchar(50),
-	@lastName nvarchar(50)
+	@LastName nvarchar(50)
 AS
 BEGIN
 	IF @FirstName is not NULL AND @LastName is NULL
