@@ -9,9 +9,9 @@ using Shared.Models;
 using System.Windows;
 using System.Windows.Input;
 
-namespace DesktopApp.Dialogs
+namespace DesktopApp.Dialogs.ViewModels
 {
-    class AddEmployeeViewModel: ObservableObject, IEmployeeDetailsViewModel, IDisposable
+    class AddEmployeeViewModel : ObservableObject, IEmployeeDetailsViewModel, IDisposable
     {
         private readonly IApiService _apiService;
         private readonly Defaults _defaults;
@@ -67,11 +67,11 @@ namespace DesktopApp.Dialogs
         }
         private void RefreshEmployeeId()
         {
-                Employee.EmployeeId = Guid.NewGuid().ToString();
+            Employee.EmployeeId = Guid.NewGuid().ToString();
         }
         private async Task InsertEmployee()
         {
-            if (EmployeeValidator.Validate(Employee)) 
+            if (EmployeeValidator.Validate(Employee))
             {
                 ErrorVisibility = Visibility.Hidden;
                 await _apiService.InsertEmployee(Employee);

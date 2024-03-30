@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DesktopApp.Dialogs
+namespace DesktopApp.Dialogs.ViewModels
 {
     class ConfirmationDialogViewModel : ObservableObject, IConfirmationDialogViewModel
     {
         public ICommand AcceptCommand { get; set; }
         public ICommand CancelCommand { get; set; }
-        private string _confirmationPrompt ="";
+        private string _confirmationPrompt = "";
         /// <summary>
         /// The prompt that is displayed to the user.
         /// </summary>

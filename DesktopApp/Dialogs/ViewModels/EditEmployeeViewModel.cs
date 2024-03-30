@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Text.Json;
 using System.CodeDom;
 
-namespace DesktopApp.Dialogs
+namespace DesktopApp.Dialogs.ViewModels
 {
     class EditEmployeeViewModel : ObservableObject, IEmployeeDetailsViewModel, IDisposable
     {
@@ -68,7 +68,7 @@ namespace DesktopApp.Dialogs
                 throw new NullReferenceException(nameof(_defaults));
 
             Employee = JsonSerializer.Deserialize<Employee>(employeeAsJson)
-                ?? throw new ArgumentException("Could not parse employee data provided.",nameof(employeeAsJson));
+                ?? throw new ArgumentException("Could not parse employee data provided.", nameof(employeeAsJson));
         }
 
         private void RefreshEmployeeId()
