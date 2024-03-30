@@ -9,13 +9,11 @@
 		Title="{Binding Title}"
 		MinHeight="450"
 		MinWidth="800"
-		Background="#FF2A1B1B">
+		x:Name="Main"
+		Style="{StaticResource WindowBaseStyle}">
 	<Window.DataContext>
 		<local:MainWindowViewModel />
 	</Window.DataContext>
-	<Window.Resources>
-		<local:MainWindowViewModel x:Key="MainWindowViewModel" />
-	</Window.Resources>
 	<Grid x:Name="MainGrid"
 		  ClipToBounds="True"
 		  ScrollViewer.CanContentScroll="True">
@@ -27,67 +25,20 @@
 			<ColumnDefinition Width="639*" />
 			<ColumnDefinition Width="161*" />
 		</Grid.ColumnDefinitions>
-		<DataGrid x:Name="ResultsDataGrid"
-				  ItemsSource="{Binding Employees}"
-				  Margin="5,0,5,5"
-				  Width="auto"
-				  Height="auto"
-				  Grid.Row="1"
-				  Grid.ColumnSpan="2"
-				  AutoGenerateColumns="False"
-				  IsReadOnly="True"
-				  CanUserAddRows="False"
-				  AlternatingRowBackground="LightGray">
-			<DataGrid.Resources>
-				<DataTemplate x:Key="HireDateTemplate">
-					<DatePicker IsHitTestVisible="False"
-								SelectedDate="{Binding HireDate}"
-								IsManipulationEnabled="False"
-								Width="150" />
-				</DataTemplate>
-				<DataTemplate x:Key="IsActiveTemplate">
-					<CheckBox IsHitTestVisible="False"
-							  HorizontalAlignment="Center"
-							  IsChecked="{Binding IsActive}" />
-				</DataTemplate>
-			</DataGrid.Resources>
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="First Name"
-									Binding="{Binding FirstName}" />
-				<DataGridTextColumn Header="Last Name"
-									Binding="{Binding LastName}" />
-				<DataGridTextColumn Header="Age"
-									Binding="{Binding Age}" />
-				<DataGridTextColumn Header="Salary"
-									Binding="{Binding Salary, StringFormat=C}" />
-				<DataGridTextColumn Header="Title"
-									Binding="{Binding Title}" />
-				<DataGridTextColumn Header="Employee Id"
-									Binding="{Binding EmployeeId}" />
-				<DataGridTemplateColumn Header="Current Employee"
-										CellTemplate="{StaticResource IsActiveTemplate }" />
-				<DataGridTemplateColumn Header="Hire Date"
-										CellTemplate="{StaticResource HireDateTemplate }" />
-				<DataGridTextColumn Width="1*" />
-			</DataGrid.Columns>
-		</DataGrid>
 		<Grid x:Name="TopRowCenterGrid"
 			  VerticalAlignment="Center"
 			  MinWidth="480"
 			  Grid.ColumnSpan="2">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto
-								  " />
+				<ColumnDefinition Width="Auto           " />
 				<ColumnDefinition Width="1*" />
-				<ColumnDefinition Width="Auto
-								  " />
+				<ColumnDefinition Width="Auto           " />
 			</Grid.ColumnDefinitions>
 			<StackPanel x:Name="CriteriaPanel"
 						Orientation="Horizontal">
 				<Label x:Name="CriteraLabel"
 					   Content="{Binding CriteriaLabelText}"
-					   Foreground="White"
-					   d:LayoutOverrides="LeftPosition, RightPosition" />
+					   Style="{StaticResource baseLabel}" />
 				<ComboBox x:Name="CriteriaSelect"
 						  Width="150"
 						  ItemsSource="{Binding Settings.SearchCriteriaToString}"
@@ -125,7 +76,7 @@
 								 IsEnabled="{Binding IsComparison}" />
 				</StackPanel>
 			</StackPanel>
-			<StackPanel x:Name="SearchSubmission"
+			<StackPanel x:Name="SearchSubmissionPanel"
 						Grid.Column="1"
 						Orientation="Horizontal"
 						VerticalAlignment="Center"
@@ -174,5 +125,62 @@
 						   StrokeThickness="1" />
 			</Grid>
 		</Grid>
+		<DataGrid x:Name="ResultsDataGrid"
+				  ItemsSource="{Binding Employees}"
+				  Margin="5,0,5,5"
+				  Width="auto"
+				  Height="auto"
+				  Grid.Row="1"
+				  Grid.ColumnSpan="2"
+				  AutoGenerateColumns="False"
+				  IsReadOnly="True"
+				  CanUserAddRows="False"
+				  AlternatingRowBackground="LightGray">
+			<DataGrid.Resources>
+				<DataTemplate x:Key="HireDateTemplate">
+					<DatePickerTextBox IsHitTestVisible="False"
+									   Text="{Binding HireDate, StringFormat=MM/dd/yyyy}"
+									   IsManipulationEnabled="False"
+									   Width="150" />
+				</DataTemplate>
+				<DataTemplate x:Key="IsActiveTemplate">
+					<CheckBox IsHitTestVisible="False"
+							  HorizontalAlignment="Center"
+							  IsChecked="{Binding IsActive}" />
+				</DataTemplate>
+				<DataTemplate x:Key="AddUserHeader">
+					<Button VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Width="25"
+							Height="25"
+							Command="{Binding DataContext.ShowAddEmployeeCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}">
+						<Image Source="/person-add.png" />
+					</Button>
+				</DataTemplate>
+			</DataGrid.Resources>
+			<DataGrid.Columns>
+				<DataGridTemplateColumn	MinWidth="40"
+										CanUserResize="False"
+										HeaderTemplate="{StaticResource AddUserHeader}"
+										Width="40" />
+				<DataGridTextColumn Header="First Name"
+									Binding="{Binding FirstName}" />
+				<DataGridTextColumn Header="Last Name"
+									Binding="{Binding LastName}" />
+				<DataGridTextColumn Header="Age"
+									Binding="{Binding Age}" />
+				<DataGridTextColumn Header="Salary"
+									Binding="{Binding Salary, StringFormat=C}" />
+				<DataGridTextColumn Header="Title"
+									Binding="{Binding Title}" />
+				<DataGridTextColumn Header="Employee Id"
+									Binding="{Binding EmployeeId}" />
+				<DataGridTemplateColumn Header="Current Employee"
+										CellTemplate="{StaticResource IsActiveTemplate}" />
+				<DataGridTemplateColumn Header="Hire Date"
+										CellTemplate="{StaticResource HireDateTemplate}" />
+				<DataGridTextColumn Width="1*" />
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </Window>

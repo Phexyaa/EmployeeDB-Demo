@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="DesktopApp.Dialogs.ErrorMessage"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:local="clr-namespace:DesktopApp.Dialogs"
+			 mc:Ignorable="d">
+	<Grid>
+		<DockPanel x:Name="ErrorPanel"
+				   Style="{StaticResource ErrorMessagePanel}"
+				   d:LayoutOverrides="Width, Height">
+			<Grid x:Name="ErrorGrid">
+				<DockPanel FlowDirection="RightToLeft"
+						   VerticalAlignment="Bottom"
+						   Height="Auto">
+					<Button x:Name="ExitErrorButton"
+							Content="Exit"
+							Command="{Binding ExitErrorCommand}">
+						<!--Future <Image />-->
+					</Button>
+					<TextBlock x:Name="ErrorTextBlock"
+							   Text="{Binding SaveError}"
+							   Grid.Row="1"
+							   Height="Auto"
+							   Grid.ColumnSpan="2" />
+				</DockPanel>
+			</Grid>
+		</DockPanel>
+	</Grid>
+</UserControl>

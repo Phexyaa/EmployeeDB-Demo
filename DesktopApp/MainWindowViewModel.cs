@@ -8,16 +8,18 @@ using System.Windows.Media;
 using Shared.Enums;
 using Microsoft.Extensions.Options;
 using Shared.Global;
+using DesktopApp.Dialogs;
 using Microsoft.Extensions.FileProviders;
 using Shared.Interfaces;
 
 namespace DesktopApp
 {
-    class MainWindowViewModel : ObservableObject
+    internal class MainWindowViewModel : ObservableObject
     {
         private readonly IApiService? _apiService;
         private readonly Timer _connectionTestTimer;
         private readonly Defaults? _defaults;
+        private AddEmployeeDialog _employeeDialog;
         public Defaults? Settings { get => _defaults; }
         public string Title { get; set; } = "Employee Lookup Demo";
         public string CriteriaLabelText { get; set; } = "Search by:";
@@ -49,6 +51,7 @@ namespace DesktopApp
 
         public ICommand SearchCommand { get; }
         public ICommand SearchCriteriaSelectedCommand { get; }
+        public ICommand ShowAddEmployeeCommand { get; }
 
         private List<Employee> _employees = new();
         public List<Employee> Employees
@@ -77,6 +80,7 @@ namespace DesktopApp
             get => _isComparison; set => SetProperty(ref _isComparison, value);
         }
 
+
         public MainWindowViewModel()
         {
             var defaultService = App.Current.Services.GetService<IOptionsMonitor<Defaults>>();
@@ -91,11 +95,32 @@ namespace DesktopApp
 
             SearchCommand = new AsyncRelayCommand<string>(Search);
             SearchCriteriaSelectedCommand = new RelayCommand<SearchCriteria>(SearchCriteriaSelected);
+            ShowAddEmployeeCommand = new RelayCommand(ShowAddEmployeeDialog);
 
             _connectionTestTimer = new Timer(UpdateConnectionStatusIcon, null, 0, 10000);
 
         }
+        public void ShowAddEmployeeDialog()
+        {
+            var dialogDataContext = new AddEmployeeDialogViewModel();
+            _employeeDialog = new AddEmployeeDialog();
+            _employeeDialog.DataContext = dialogDataContext;
+            dialogDataContext.CloseEvent += CloseAddEmployeeWindowDialog;
 
+            _employeeDialog.ShowDialog();
+        }
+        public void CloseAddEmployeeWindowDialog(object? sender, bool isSuccess)
+        {
+            //Todo: Implement some sort of success popup or icon.
+            try
+            {
+                _employeeDialog.Close();
+            }
+            catch (InvalidCastException)
+            {
+                return;
+            }
+        }
         public async Task Search(string? keyword)
         {
             var criteria = _defaults!.SearchCriteriaToString;
