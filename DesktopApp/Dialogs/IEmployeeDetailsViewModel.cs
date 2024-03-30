@@ -13,6 +13,7 @@ internal interface IEmployeeDetailsViewModel
     Visibility ErrorVisibility { get; set; }
     ICommand ExitErrorCommand { get; set; }
     ICommand SaveCommand { get; set; }
+    ICommand GenerateEmployeeIdCommand { get; set; }
 
     void Dispose();
 }

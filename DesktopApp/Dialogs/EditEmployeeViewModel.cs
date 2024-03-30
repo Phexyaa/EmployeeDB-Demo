@@ -10,6 +10,9 @@ using Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Shared.Global;
+using System.Windows.Navigation;
+using System.Text.Json;
+using System.CodeDom;
 
 namespace DesktopApp.Dialogs
 {
@@ -17,6 +20,7 @@ namespace DesktopApp.Dialogs
     {
         private readonly IApiService _apiService;
         private readonly Defaults _defaults;
+        private YesNoDialogView? _userConfirmationDialog;
 
         public Defaults Defaults { get { return _defaults; } }
 
@@ -45,13 +49,15 @@ namespace DesktopApp.Dialogs
         public ICommand CancelCommand { get; set; }
         public ICommand ExitErrorCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand GenerateEmployeeIdCommand { get; set; }
 
-        public EditEmployeeViewModel(Employee employee)
+        public EditEmployeeViewModel(string employeeAsJson)
         {
             ExitErrorCommand = new RelayCommand(() => ErrorVisibility = Visibility.Hidden);
             SaveCommand = new AsyncRelayCommand(UpdateEmployee);
             SaveCommand.CanExecute(EmployeeValidator.Validate(Employee));
             CancelCommand = new RelayCommand(() => CloseEvent?.Invoke(this, false));
+            GenerateEmployeeIdCommand = new RelayCommand(RefreshEmployeeId);
 
             _apiService = App.Current.Services.GetRequiredService<IApiService>();
             _defaults = App.Current.Services.GetRequiredService<IOptionsMonitor<Defaults>>().CurrentValue;
@@ -61,8 +67,31 @@ namespace DesktopApp.Dialogs
             if (_defaults == null)
                 throw new NullReferenceException(nameof(_defaults));
 
-            Employee = employee;
+            Employee = JsonSerializer.Deserialize<Employee>(employeeAsJson)
+                ?? throw new ArgumentException("Could not parse employee data provided.",nameof(employeeAsJson));
         }
+
+        private void RefreshEmployeeId()
+        {
+            var confirmationDataContext = new ConfirmationDialogViewModel();
+            confirmationDataContext.ConfirmationPrompt = "Please confirm that you want to over-write the existing employee ID.";
+            confirmationDataContext.UserAccepted += OverWriteEmployeeId;
+            confirmationDataContext.UserRefused += CloseConfirmationDialog;
+
+            _userConfirmationDialog = new YesNoDialogView();
+            _userConfirmationDialog.DataContext = confirmationDataContext;
+
+            _userConfirmationDialog.ShowDialog();
+        }
+
+        private void CloseConfirmationDialog(object? sender, EventArgs e) => _userConfirmationDialog?.Close();
+
+        private void OverWriteEmployeeId(object? sender, EventArgs args)
+        {
+            Employee.EmployeeId = Guid.NewGuid().ToString();
+            _userConfirmationDialog?.Close();
+        }
+
         private async Task UpdateEmployee()
         {
             if (EmployeeValidator.Validate(Employee))

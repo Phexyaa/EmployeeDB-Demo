@@ -39,7 +39,7 @@
 				   VerticalAlignment="Center"
 				   Grid.Column="0"
 				   Grid.Row="0"
-				   Style="{StaticResource baseLabel}" />
+				   Style="{StaticResource BaseLabel}" />
 			<TextBox x:Name="FirstNameText"
 					 Height="25"
 					 Width="200"
@@ -59,7 +59,7 @@
 				   VerticalAlignment="Center"
 				   Grid.Column="2"
 				   Grid.Row="0"
-				   Style="{StaticResource baseLabel}" />
+				   Style="{StaticResource BaseLabel}" />
 			<TextBox x:Name="LastNameText"
 					 Height="25"
 					 Width="200"
@@ -80,27 +80,35 @@
 				   VerticalAlignment="Center"
 				   Grid.Column="0"
 				   Grid.Row="1"
-				   Style="{StaticResource baseLabel}" />
-			<TextBox x:Name="EmployeeIdText"
-					 Height="25"
-					 Width="200"
-					 Grid.Column="1"
-					 Grid.Row="1"
-					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
-					 Style="{StaticResource textBoxInError}">
-				<Binding Path="Employee.EmployeeId"
-						 UpdateSourceTrigger="LostFocus">
-					<Binding.ValidationRules>
-						<val:EmployeeIdValidator />
-					</Binding.ValidationRules>
-				</Binding>
-			</TextBox>
+				   Style="{StaticResource BaseLabel}" />
+			<DockPanel x:Name="EmployeeIdGeneratorStack"
+						Grid.Column="1"
+						Grid.Row="1">
+				<Button Height="18"
+						Width="18"
+						Margin="5,0,5,0"
+						Command="{Binding GenerateEmployeeIdCommand}">
+					<Image Source="/Assets/arrow-clockwise.png" />
+				</Button>
+				<TextBox x:Name="EmployeeIdText"
+						 Height="25"
+						 HorizontalAlignment="Stretch"
+						 Validation.ErrorTemplate="{StaticResource validationTemplate}"
+						 Style="{StaticResource textBoxInError}">
+					<Binding Path="Employee.EmployeeId"
+							 UpdateSourceTrigger="LostFocus">
+						<Binding.ValidationRules>
+							<val:EmployeeIdValidator />
+						</Binding.ValidationRules>
+					</Binding>
+				</TextBox>
+			</DockPanel>
 			<Label x:Name="TitleLabel"
 				   Content="Title:"
 				   VerticalAlignment="Center"
 				   Grid.Column="2"
 				   Grid.Row="1"
-				   Style="{StaticResource baseLabel}" />
+				   Style="{StaticResource BaseLabel}" />
 			<ComboBox x:Name="TitleCombo"
 					 Height="25"
 					 Width="200"
@@ -115,7 +123,7 @@
 				   VerticalAlignment="Center"
 				   Grid.Column="0"
 				   Grid.Row="2"
-				   Style="{StaticResource baseLabel}" />
+				   Style="{StaticResource BaseLabel}" />
 			<TextBox x:Name="AgeText"
 					 Height="25"
 					 Width="200"
@@ -135,7 +143,7 @@
 				   VerticalAlignment="Center"
 				   Grid.Column="2"
 				   Grid.Row="2"
-				   Style="{StaticResource baseLabel}" />
+				   Style="{StaticResource BaseLabel}" />
 			<TextBox x:Name="SalaryText"
 					 Height="25"
 					 Width="200"
@@ -157,7 +165,7 @@
 				<Label x:Name="EmployyeStatusLabel"
 					   Content="Currently Employed:"
 					   VerticalAlignment="Center"
-					   Style="{StaticResource baseLabel}" />
+					   Style="{StaticResource BaseLabel}" />
 				<CheckBox x:Name="EmployeeStatusCheck"
 						  ToolTip="Currently Employed"
 						  IsChecked="{Binding Employee.IsActive}"
@@ -168,7 +176,7 @@
 				   VerticalAlignment="Center"
 				   Grid.Column="2"
 				   Grid.Row="3"
-				   Style="{StaticResource baseLabel}" />
+				   Style="{StaticResource BaseLabel}" />
 			<DatePicker x:Name="HiredDatePicker"
 						Height="25"
 						Width="200"

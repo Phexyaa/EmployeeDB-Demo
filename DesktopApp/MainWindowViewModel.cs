@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Shared.Global;
 using DesktopApp.Dialogs;
 using Shared.Interfaces;
+using System.Text.Json;
 
 namespace DesktopApp
 {
@@ -110,9 +111,9 @@ namespace DesktopApp
 
             _employeeDialog.ShowDialog();
         }
-        public void EditEmployee(Employee employee)
+        public void EditEmployee(Employee? employee)
         {
-            var dialogDataContext = new EditEmployeeViewModel(employee);
+            var dialogDataContext = new EditEmployeeViewModel(JsonSerializer.Serialize(employee));
             _employeeDialog = new EmployeeDetailsView();
             _employeeDialog.DataContext = dialogDataContext;
             dialogDataContext.CloseEvent += CloseAddEmployeeWindowDialog;
@@ -167,8 +168,7 @@ namespace DesktopApp
                             Employees = await _apiService!.GetAllInactiveEmployees();
                         break;
                     case SearchCriteria.EmployeeId:
-                        Guid.TryParse(keyword, out Guid id);
-                        Employees = await _apiService!.GetEmployeeByEmployeeId(id);
+                        Employees = await _apiService!.GetEmployeeByEmployeeId(keyword);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(SelectedSearchCriteria));

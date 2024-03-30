@@ -45,12 +45,14 @@ namespace DesktopApp.Dialogs
         public ICommand CancelCommand { get; set; }
         public ICommand ExitErrorCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand GenerateEmployeeIdCommand { get; set; }
         public AddEmployeeViewModel()
         {
             ExitErrorCommand = new RelayCommand(() => ErrorVisibility = Visibility.Hidden);
             SaveCommand = new AsyncRelayCommand(InsertEmployee);
             SaveCommand.CanExecute(EmployeeValidator.Validate(Employee));
             CancelCommand = new RelayCommand(() => CloseEvent?.Invoke(this, false));
+            GenerateEmployeeIdCommand = new RelayCommand(RefreshEmployeeId);
 
             _apiService = App.Current.Services.GetRequiredService<IApiService>();
             _defaults = App.Current.Services.GetRequiredService<IOptionsMonitor<Defaults>>().CurrentValue;
@@ -62,6 +64,10 @@ namespace DesktopApp.Dialogs
 
             Employee.HireDate = DateTime.Now;
             Employee.Title = _defaults.EmployeeTitles.First();
+        }
+        private void RefreshEmployeeId()
+        {
+                Employee.EmployeeId = Guid.NewGuid().ToString();
         }
         private async Task InsertEmployee()
         {
@@ -83,5 +89,6 @@ namespace DesktopApp.Dialogs
             Employee = new();
             CloseEvent?.Invoke(this, false);
         }
+
     }
 }

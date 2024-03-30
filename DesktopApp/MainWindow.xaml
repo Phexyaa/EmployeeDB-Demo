@@ -38,7 +38,7 @@
 						Orientation="Horizontal">
 				<Label x:Name="CriteraLabel"
 					   Content="{Binding CriteriaLabelText}"
-					   Style="{StaticResource baseLabel}" />
+					   Style="{StaticResource BaseLabel}" />
 				<ComboBox x:Name="CriteriaSelect"
 						  Width="150"
 						  ItemsSource="{Binding Settings.SearchCriteriaToString}"

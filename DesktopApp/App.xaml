@@ -35,8 +35,13 @@
 			<Setter Property="Opacity"
 					Value="40" />
 		</Style>
-		<Style x:Key="baseLabel"
+		<Style x:Key="BaseLabel"
 			   TargetType="Label">
+			<Setter Property="Foreground"
+					Value="White" />
+		</Style>
+		<Style x:Key="BaseTextBlock"
+			   TargetType="TextBlock">
 			<Setter Property="Foreground"
 					Value="White" />
 		</Style>
