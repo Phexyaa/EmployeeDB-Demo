@@ -1,7 +1,5 @@
-﻿using Azure;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using Shared.Enums;
 using Shared.Interfaces;
 using Shared.Models;
 using System.Data;

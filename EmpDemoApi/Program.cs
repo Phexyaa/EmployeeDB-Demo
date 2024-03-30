@@ -1,4 +1,3 @@
-using API.Data;
 using EmpDemoApi;
 using Shared.Global;
 using Shared.Interfaces;

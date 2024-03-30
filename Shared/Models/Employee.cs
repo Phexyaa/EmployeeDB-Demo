@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+﻿using System.Globalization;
 
 namespace Shared.Models
 {
@@ -36,5 +36,6 @@ namespace Shared.Models
             get => _isActive;
             set => SetProperty(ref _isActive, value);
         }
+          
     }
 }

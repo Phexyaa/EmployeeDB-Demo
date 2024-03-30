@@ -15,6 +15,9 @@
     <None Remove="Assets\database-check.png" />
     <None Remove="Assets\database-slash.png" />
     <None Remove="Assets\search.png" />
+    <None Remove="Dialogs\x-octagon.png" />
+    <None Remove="pencil-fill.png" />
+    <None Remove="person-add.png" />
     <None Remove="search.svg" />
   </ItemGroup>
 
@@ -46,6 +49,9 @@
     </Resource>
     <Resource Include="Assets\database-slash.png" />
     <Resource Include="Assets\search.png" />
+    <Resource Include="Dialogs\x-octagon.png" />
+    <Resource Include="pencil-fill.png" />
+    <Resource Include="person-add.png" />
   </ItemGroup>
 
   <ItemGroup>

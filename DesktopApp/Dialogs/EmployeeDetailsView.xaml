@@ -1,4 +1,4 @@
-﻿<Window x:Class="DesktopApp.Dialogs.AddEmployeeDialog"
+﻿<Window x:Class="DesktopApp.Dialogs.EmployeeDetailsView"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -40,14 +40,14 @@
 				   Grid.Column="0"
 				   Grid.Row="0"
 				   Style="{StaticResource baseLabel}" />
-			<TextBox x:Name="LastNametext"
+			<TextBox x:Name="FirstNameText"
 					 Height="25"
 					 Width="200"
 					 Grid.Column="1"
 					 Grid.Row="0"
 					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
 					 Style="{StaticResource textBoxInError}">
-				<Binding Path="NewEmployee.FirstName"
+				<Binding Path="Employee.FirstName"
 						 UpdateSourceTrigger="LostFocus">
 					<Binding.ValidationRules>
 						<val:NameValidator />
@@ -67,7 +67,7 @@
 					 Grid.Row="0"
 					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
 					 Style="{StaticResource textBoxInError}">
-				<Binding Path="NewEmployee.LastName"
+				<Binding Path="Employee.LastName"
 						 UpdateSourceTrigger="LostFocus">
 					<Binding.ValidationRules>
 						<val:NameValidator />
@@ -88,7 +88,7 @@
 					 Grid.Row="1"
 					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
 					 Style="{StaticResource textBoxInError}">
-				<Binding Path="NewEmployee.EmployeeId"
+				<Binding Path="Employee.EmployeeId"
 						 UpdateSourceTrigger="LostFocus">
 					<Binding.ValidationRules>
 						<val:EmployeeIdValidator />
@@ -101,20 +101,14 @@
 				   Grid.Column="2"
 				   Grid.Row="1"
 				   Style="{StaticResource baseLabel}" />
-			<TextBox x:Name="TitleText"
+			<ComboBox x:Name="TitleCombo"
 					 Height="25"
 					 Width="200"
 					 Grid.Column="3"
-					 Grid.Row="1"
-					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
-					 Style="{StaticResource textBoxInError}">
-				<Binding Path="NewEmployee.Title"
-						 UpdateSourceTrigger="LostFocus">
-					<Binding.ValidationRules>
-						<val:EmployeeTitleValidator />
-					</Binding.ValidationRules>
-				</Binding>
-			</TextBox>
+					  ItemsSource="{Binding Defaults.EmployeeTitles}"
+					  SelectedIndex="1"
+					  SelectedItem="{Binding Employee.Title}"
+					 Grid.Row="1"/>
 
 			<Label x:Name="AgeLabel"
 				   Content="Age:"
@@ -129,7 +123,7 @@
 					 Grid.Row="2"
 					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
 					 Style="{StaticResource textBoxInError}">
-				<Binding Path="NewEmployee.Age"
+				<Binding Path="Employee.Age"
 						 UpdateSourceTrigger="LostFocus">
 					<Binding.ValidationRules>
 						<val:AgeValidator />
@@ -149,7 +143,7 @@
 					 Grid.Row="2"
 					 Validation.ErrorTemplate="{StaticResource validationTemplate}"
 					 Style="{StaticResource textBoxInError}">
-				<Binding Path="NewEmployee.Salary"
+				<Binding Path="Employee.Salary"
 						 UpdateSourceTrigger="LostFocus">
 					<Binding.ValidationRules>
 						<val:SalaryValidator />
@@ -166,7 +160,7 @@
 					   Style="{StaticResource baseLabel}" />
 				<CheckBox x:Name="EmployeeStatusCheck"
 						  ToolTip="Currently Employed"
-						  IsChecked="{Binding NewEmployee.IsActive}"
+						  IsChecked="{Binding Employee.IsActive}"
 						  VerticalAlignment="Center" />
 			</StackPanel>
 			<Label x:Name="HireDateLabel"
@@ -178,7 +172,7 @@
 			<DatePicker x:Name="HiredDatePicker"
 						Height="25"
 						Width="200"
-						SelectedDate="{Binding NewEmployee.HireDate}"
+						SelectedDate="{Binding Employee.HireDate}"
 						Grid.Column="3"
 						Grid.Row="3" />
 			<StackPanel x:Name="ButtonPanel"
@@ -189,21 +183,15 @@
 						Grid.Column="3"
 						Grid.Row="4">
 				<Button x:Name="CancelButton"
-						IsCancel="True"
 						Content="Cancel"
 						Width="75"
-						Margin="0,0,5,0" />
+						Margin="0,0,5,0"
+						Command="{Binding CancelCommand}" />
 				<Button x:Name="SaveButton"
 						Content="Save"
 						IsDefault="True"
 						Width="75"
 						Command="{Binding SaveCommand}">
-					<!--<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Click">
-						<i:CallMethodAction MethodName="Close"
-											TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" />
-					</i:EventTrigger>
-				</i:Interaction.Triggers>-->
 				</Button>
 			</StackPanel>
 		</Grid>

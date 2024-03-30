@@ -9,7 +9,6 @@ using Shared.Enums;
 using Microsoft.Extensions.Options;
 using Shared.Global;
 using DesktopApp.Dialogs;
-using Microsoft.Extensions.FileProviders;
 using Shared.Interfaces;
 
 namespace DesktopApp
@@ -19,7 +18,7 @@ namespace DesktopApp
         private readonly IApiService? _apiService;
         private readonly Timer _connectionTestTimer;
         private readonly Defaults? _defaults;
-        private AddEmployeeDialog _employeeDialog;
+        private EmployeeDetailsView _employeeDialog;
         public Defaults? Settings { get => _defaults; }
         public string Title { get; set; } = "Employee Lookup Demo";
         public string CriteriaLabelText { get; set; } = "Search by:";
@@ -52,6 +51,7 @@ namespace DesktopApp
         public ICommand SearchCommand { get; }
         public ICommand SearchCriteriaSelectedCommand { get; }
         public ICommand ShowAddEmployeeCommand { get; }
+        public ICommand EditEmployeeCommand { get; }
 
         private List<Employee> _employees = new();
         public List<Employee> Employees
@@ -94,6 +94,7 @@ namespace DesktopApp
                 throw new NullReferenceException(nameof(_apiService));
 
             SearchCommand = new AsyncRelayCommand<string>(Search);
+            EditEmployeeCommand = new RelayCommand<Employee>(EditEmployee);
             SearchCriteriaSelectedCommand = new RelayCommand<SearchCriteria>(SearchCriteriaSelected);
             ShowAddEmployeeCommand = new RelayCommand(ShowAddEmployeeDialog);
 
@@ -102,8 +103,17 @@ namespace DesktopApp
         }
         public void ShowAddEmployeeDialog()
         {
-            var dialogDataContext = new AddEmployeeDialogViewModel();
-            _employeeDialog = new AddEmployeeDialog();
+            var dialogDataContext = new AddEmployeeViewModel();
+            _employeeDialog = new EmployeeDetailsView();
+            _employeeDialog.DataContext = dialogDataContext;
+            dialogDataContext.CloseEvent += CloseAddEmployeeWindowDialog;
+
+            _employeeDialog.ShowDialog();
+        }
+        public void EditEmployee(Employee employee)
+        {
+            var dialogDataContext = new EditEmployeeViewModel(employee);
+            _employeeDialog = new EmployeeDetailsView();
             _employeeDialog.DataContext = dialogDataContext;
             dialogDataContext.CloseEvent += CloseAddEmployeeWindowDialog;
 

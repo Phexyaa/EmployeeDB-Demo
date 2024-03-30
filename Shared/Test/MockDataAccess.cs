@@ -1,7 +1,6 @@
 ﻿using Shared.Interfaces;
 using Shared.Models;
 using Shared.Utility;
-using System.Linq.Expressions;
 
 namespace Shared.Test;
 
@@ -111,7 +110,7 @@ public class MockDataAccess : IDataService
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e=> e.FirstName !=null && e.FirstName.ToLower().Contains(firstName)).ToList());
+        return Task.FromResult(employees.Where(e => e.FirstName != null && e.FirstName.ToLower().Contains(firstName)).ToList());
     }
     public Task<List<Employee>> GetEmployeesByLastName(string lastName)
     {
@@ -143,27 +142,34 @@ public class MockDataAccess : IDataService
         if (employees.Count() == 0)
             employees = GenerateEmployees();
 
-        return Task.FromResult(employees.Where(e => e.Title !=null && e.Title.Contains(title)).ToList());
+        return Task.FromResult(employees.Where(e => e.Title != null && e.Title.Contains(title)).ToList());
     }
 
     public Task<int> InsertEmployee(Employee employee)
     {
         employees.Add(employee);
-        return Task.Run(() => {
+        return Task.Run(() =>
+        {
             return new Random().Next(50, 100);
         });
     }
 
     public Task<int> UpdateEmployee(Employee employee)
     {
-        return Task.Run(() => {
-            return new Random().Next(50, 100);
-        });
+        var existingRecord = employees.Find(e => e.EmployeeId == employee.EmployeeId);
+        if(existingRecord != null)
+        {
+            employees[employees.IndexOf(existingRecord)] = employee;
+            return Task.Run(() => { return 1; });
+        }
+        else
+            throw new ArgumentOutOfRangeException(nameof(employee), $"{employee.EmployeeId} was not found in existing dataset.");
     }
 
     public Task<int> DeleteEmployeeRecord(int databaseId)
     {
-        return Task.Run(() => {
+        return Task.Run(() =>
+        {
             return new Random().Next(50, 100);
         });
     }

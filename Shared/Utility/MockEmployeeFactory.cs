@@ -1,6 +1,5 @@
 ﻿using Shared.Models;
 using Shared.Global;
-using System.Runtime.InteropServices.Marshalling;
 using Microsoft.Extensions.Options;
 
 namespace Shared.Utility;

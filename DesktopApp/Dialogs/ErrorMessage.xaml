@@ -14,15 +14,21 @@
 						   VerticalAlignment="Bottom"
 						   Height="Auto">
 					<Button x:Name="ExitErrorButton"
-							Content="Exit"
-							Command="{Binding ExitErrorCommand}">
-						<!--Future <Image />-->
+							Command="{Binding ExitErrorCommand}"
+							Height="25"
+							Width="25"
+							Margin="0,0,15,0"
+							Background="DarkRed">
+						<Image Stretch="Fill"
+                               Source="/Dialogs/x-octagon.png" />
 					</Button>
 					<TextBlock x:Name="ErrorTextBlock"
-							   Text="{Binding SaveError}"
+							   Text="{Binding Error}"
 							   Grid.Row="1"
 							   Height="Auto"
-							   Grid.ColumnSpan="2" />
+							   Margin="0,0,5,0"
+							   Grid.ColumnSpan="2" 
+							   VerticalAlignment="Center"/>
 				</DockPanel>
 			</Grid>
 		</DockPanel>

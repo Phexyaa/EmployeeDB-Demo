@@ -1,6 +1,4 @@
-﻿using API.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shared.Interfaces;
 using Shared.Models;
 
