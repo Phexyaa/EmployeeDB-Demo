@@ -63,7 +63,7 @@
     <Folder Include="StoredProcedures\Delete" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Employee.sql" />
+    <Build Include="Employees.sql" />
     <Build Include="StoredProcedures\Read\SpGetAllActiveEmployees.sql" />
     <Build Include="StoredProcedures\Read\SpGetAllEmployees.sql" />
     <Build Include="StoredProcedures\Read\SpGetAllInactiveEmployees.sql" />

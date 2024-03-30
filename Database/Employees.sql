@@ -7,6 +7,6 @@
     [Salary] INT NOT NULL, 
     [HireDate] DATE NOT NULL
 , 
-    [EmployeeId] NVARCHAR(50) NOT NULL, 
+    [EmployeeId] NVARCHAR(50) NOT NULL UNIQUE, 
     [Title] NVARCHAR(50) NOT NULL, 
     [IsActive] BIT NOT NULL)
