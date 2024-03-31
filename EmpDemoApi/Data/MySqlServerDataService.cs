@@ -91,18 +91,28 @@ public class MySqlDataService : IDataService
     }
     public async Task<int> InsertEmployee(Employee employee)
     {
+        var parameters = new DynamicParameters(employee);
         using IDbConnection connection = new MySqlConnection(_config.GetConnectionString("Default"));
-        var result = await connection.ExecuteAsync("SpInsertEmployee", employee, null, commandType: CommandType.StoredProcedure);;
+        var result = await connection.ExecuteAsync("SpInsertEmployee", parameters, null, commandType: CommandType.StoredProcedure);;
         return result;
     }
     public async Task<int> UpdateEmployee(Employee employee)
     {
-        using IDbConnection connection = new MySqlConnection(_config.GetConnectionString("Default"));
-        var result = await connection.ExecuteAsync("SpUpdateEmployee", employee, null, commandType: CommandType.StoredProcedure);;
-        return result;
+        try
+        {
+            var parameters = new DynamicParameters(employee);
+            using IDbConnection connection = new MySqlConnection(_config.GetConnectionString("Default"));
+            var result = await connection.ExecuteAsync("SpUpdateEmployee", parameters, null, commandType: CommandType.StoredProcedure); ;
+            return result;
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
     }
     public async Task<int> DeleteEmployeeRecord(int databaseId)
-    {
+    {       
         using IDbConnection connection = new MySqlConnection(_config.GetConnectionString("Default"));
         var result = await connection.ExecuteAsync("SpDeleteEmployeeRecord", databaseId, null, commandType: CommandType.StoredProcedure);;
         return result;

@@ -6,11 +6,11 @@ using System.Data;
 
 namespace API.Data;
 
-public class MySqlServerDataService : IDataService
+public class SqlServerDataService : IDataService
 {
     private readonly IConfiguration _config;
 
-    public MySqlServerDataService(IConfiguration config) => _config = config;
+    public SqlServerDataService(IConfiguration config) => _config = config;
     public async Task<List<Employee>> GetEmployeeByDatabaseId(int databaseId)
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString("Default"));
