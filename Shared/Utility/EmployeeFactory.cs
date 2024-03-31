@@ -1,4 +1,5 @@
-﻿using Shared.Global;
+﻿using Microsoft.Extensions.Options;
+using Shared.Global;
 using Shared.Models;
 
 namespace Shared.Utility;
@@ -6,9 +7,9 @@ namespace Shared.Utility;
 public class EmployeeFactory : IEmployeeFactory
 {
     private readonly Defaults _defaults;
-    public EmployeeFactory(Defaults defaults)
+    public EmployeeFactory(IOptions<Defaults> defaults)
     {
-        _defaults = defaults;
+        _defaults = defaults.Value;
     }
     public Employee CreateEmployee(string firstName, string lastName, int salary, string title, DateTime hireDate, int age = 0)
     {
