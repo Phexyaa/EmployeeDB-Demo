@@ -124,15 +124,8 @@ namespace DesktopApp
         }
         public void CloseAddEmployeeWindowDialog(object? sender, bool isSuccess)
         {
-            //Todo: Implement some sort of success popup or icon.
-            try
-            {
-                _employeeDialog.Close();
-            }
-            catch (InvalidCastException)
-            {
-                return;
-            }
+            _employeeDialog.Close();
+            SearchCommand.Execute("");
         }
         public async Task Search(string? keyword)
         {
