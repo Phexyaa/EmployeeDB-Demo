@@ -15,7 +15,7 @@ builder.Services.AddOptions<Defaults>().Bind(config.GetRequiredSection("Defaults
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IDataService, MySqlDataService>(); //SqlServerDataService or MockDataService
-builder.Services.AddTransient<IEmployeeFactory, MockEmployeeFactory>(); //Mocking employee factory for now
+builder.Services.AddTransient<IEmployeeFactory, EmployeeFactory>(); //MockEmployeeFactory
 
 var app = builder.Build();
 
