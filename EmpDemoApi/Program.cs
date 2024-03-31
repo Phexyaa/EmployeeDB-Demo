@@ -1,3 +1,4 @@
+using API.Data;
 using EmpDemoApi;
 using Shared.Global;
 using Shared.Interfaces;
@@ -13,8 +14,8 @@ var config = builder.Configuration;
 builder.Services.AddOptions<Defaults>().Bind(config.GetRequiredSection("Defaults"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IDataService, MockDataAccess>(); //Mocking data service for now
-builder.Services.AddTransient<IEmployeeFactory, MockEmployeeFactory>(); //Mocking employee for now
+builder.Services.AddSingleton<IDataService, MySqlDataService>(); //SqlServerDataService or MockDataService
+builder.Services.AddTransient<IEmployeeFactory, MockEmployeeFactory>(); //Mocking employee factory for now
 
 var app = builder.Build();
 
