@@ -6,10 +6,10 @@ namespace Shared.Test
 {
     public class MockApi : IApiService
     {
-        private readonly MockDataAccess _dataAccess;
+        private readonly MockDataService _dataAccess;
         public MockApi(IEmployeeFactory employeeFactory)
         {
-            _dataAccess = new MockDataAccess(employeeFactory);
+            _dataAccess = new MockDataService(employeeFactory);
         }
         public async Task<bool> ConnectionTest()
         {

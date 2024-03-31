@@ -4,11 +4,11 @@ using Shared.Utility;
 
 namespace Shared.Test;
 
-public class MockDataAccess : IDataService
+public class MockDataService : IDataService
 {
     private readonly IEmployeeFactory _employeeFactory;
     private List<Employee> employees = new List<Employee>();
-    public MockDataAccess(IEmployeeFactory employeeFactory)
+    public MockDataService(IEmployeeFactory employeeFactory)
     {
         _employeeFactory = employeeFactory;
     }
